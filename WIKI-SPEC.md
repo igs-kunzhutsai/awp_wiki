@@ -52,35 +52,63 @@
 
 ```
 awp-wiki-repo/
-├── WIKI-SPEC.md        本文件（wiki 自己的規範）
-├── AGENTS.md           專案指引正本，所有 AI 共讀
-├── CLAUDE.md           `@AGENTS.md` + Claude 專屬
-├── README.md           人類入口
+│
+├── WIKI-SPEC.md                  本文件 —— 結構與規範的權威定義
+├── AGENTS.md                     專案指引正本，所有 AI 共讀
+├── CLAUDE.md                     `@AGENTS.md` ＋ Claude 專屬
+├── README.md                     人類入口
+├── .kiro/
+│   └── steering/project.md       Kiro 入口，指向 AGENTS.md
 │
 ├── wiki/
-│   ├── index.md            全站唯一導覽入口
-│   ├── intro.md            從零理解 AWP
-│   ├── quick-reference.md  速查表
-│   ├── glossary.md         術語表
-│   ├── log.md              wiki 操作日誌（append-only）
+│   ├── index.md                  唯一導覽入口（30 秒重點 ＋ 任務反查表）
+│   ├── glossary.md               術語表
+│   ├── log.md                    記 wiki 自己的變化（append-only）
 │   │
-│   ├── modules/        AWP 有什麼功能（一模組一頁）
-│   ├── flow/           遊戲端怎麼用（跨模組流程）
-│   ├── conventions/    寫 code 的規範
-│   ├── decisions/      為什麼這樣設計
-│   ├── regions/        跨專案的地區規則（功能 / 法規對照表）
-│   ├── projects/       各專案特有（一專案一目錄）
-│   └── raw/            原始素材，唯讀，不進 index
+│   ├── modules/                  有什麼功能（一模組一頁）
+│   │   ├── README.md             說明本目錄放什麼
+│   │   └── _example-module.md    範例頁
+│   │
+│   ├── flow/                     怎麼用（跨模組流程）
+│   ├── conventions/              寫 code 的規範
+│   ├── decisions/                為什麼這樣設計
+│   ├── regions/                  跨專案的地區對照表
+│   │
+│   ├── projects/                 各專案特有（一專案一資料夾）
+│   │   ├── README.md
+│   │   └── _example-project/     範例專案
+│   │       ├── setup.md          設定、bet／denom 表（地區用表格欄位）
+│   │       └── issues.md         只有這專案踩過的雷
+│   │
+│   └── raw/                      原始素材，唯讀，不進 index
+│       ├── README.md             raw 自己的入口
+│       ├── outline/              從 Outline 匯入的
+│       ├── legacy/               我們自己的舊版
+│       └── specs/                規格書、會議紀錄
 │
 └── scripts/
-    └── api-diff.js     比對兩版 header 的 API 增減
+    ├── check-wikilinks.js        掃 [[wikilink]] 是否解得開
+    ├── check-orphans.js          找沒人連得到的頁（排除 raw/ 與 _example*）
+    ├── api-diff.js               比對兩版 header 的 API 增減
+    └── sync-to-outline.js        推送到 Outline（raw/ 不推）
 ```
+
+**本節是結構的權威定義。** `README.md` 為了讓人在 repo 首頁看得懂，也畫了一份樹；
+兩邊不一致時**以本節為準**（規則 3）。改結構時兩份都要改。
 
 **子目錄不列頁面清單。** `wiki/index.md` 是唯一導覽入口 —— 頁面清單只存在一處，避免兩邊各自過期。
 
 子目錄**可以**有 `README.md`，但只寫「這個目錄放什麼、不放什麼、命名怎麼取」——
 那是規則，不會過期；**不得列出本目錄有哪些頁**——那是清單，會過期。
 `raw/README.md` 是唯一同時兼作入口的例外，因為 `raw/` 不進 index。
+
+### 範例檔命名
+
+以底線開頭的檔案或資料夾（`_example-module.md`、`_example-project/`）是**範本，不是內容**。
+
+- 新增頁面時複製它改，不要從零寫
+- 不列進 `index.md`
+- 檢查孤島時比照 `raw/` 排除
 
 ### 各目錄放什麼
 
@@ -107,19 +135,23 @@ awp-wiki-repo/
 **不要開 `projects/<遊戲>/<地區>/`** —— 那會變成笛卡爾積，新增一個地區要開 N 個目錄，
 而且每個目錄有 90% 內容相同，改共同部分要改 N 份。新增地區應該是**加一列**。
 
-### 根層六頁的分工
+### 根層三頁的分工
 
 | 檔案 | 角色 |
 |---|---|
-| `index.md` | **唯一導覽入口**。任務反查表、30 秒重點、Critical Invariants、原始碼位置 |
-| `intro.md` | 教學。從零理解，第一次接觸讀這頁 |
-| `quick-reference.md` | 字典。enum、常數、錯誤碼、路徑對照 |
-| `glossary.md` | 縮寫表 |
-| `log.md` | 記 **wiki 自己** 的變化（append-only） |
+| `index.md` | **唯一導覽入口**。30 秒重點、任務反查表、指向各模組頁 |
+| `glossary.md` | 術語縮寫表 |
+| `log.md` | 記 **wiki 自己**的變化（誰、何時、改了什麼、對照哪個 commit）|
 
-> **沒有 `changelog.md`。** 手寫的 API 更新歷程已被證明維護不了 ——
-> 原本那份最後一筆停在 2026-05-12，其後新增的 40 個 API 一筆都沒記，而且三個月沒人發現。
-> code 的變化改用 `scripts/api-diff.js` 比對兩版 header 產生，需要時跑，輸出貼進 `log.md`。
+> **沒有 `intro.md`、`quick-reference.md`、`changelog.md`。**
+>
+> - `quick-reference` 整頁是 enum、常數、錯誤碼 —— **會過期，而且 grep 一下就有**，違反規則 5
+> - `intro` 的內容（AWP 是什麼、一手 spin、9 個 state、4 種錢包、開機流程）
+>   每一段都有更好的歸屬，留著只會變成第二份會漂移的說法
+> - `changelog` 手寫維護不了（實測停在 2026-05-12，其後 40 個新 API 一筆沒記），
+>   改用 `scripts/api-diff.js` 比對兩版 header 產生
+>
+> 這三項的內容分別歸到 `index.md`、`flow/`、各 `modules/` 頁與 `conventions/`。
 
 ### `raw/` 內部
 
@@ -250,7 +282,7 @@ imported_at: 2026-05-26
 
 ### 規則 3 — 事實以模組頁為準，摘要頁只能引用
 
-`index.md` / `intro.md` / `quick-reference.md` 不得自述約束，只能連到 `modules/` 對應頁。同題舊頁在目錄上標明「不是現況依據」。
+`index.md` 不得自述約束，只能連到 `modules/` 對應頁。同題舊頁在目錄上標明「不是現況依據」。
 
 > **事故**：`awp_bs_init_event_bridge` 這個不存在的 API，模組頁已改對，但首讀的三頁還是錯的，且 `first-boot-flow.md` 同一份檔案自我矛盾。
 
@@ -336,8 +368,10 @@ imported_at: 2026-05-26
 | `reference/api-manual-index.md` | — | 刪除（內容已在 `index.md`） |
 | `analysis/codestyle.md` | `conventions/coding-style.md` | 合併，需逐段比對 |
 | `analysis/directory.md` | `conventions/directory-structure.md` | 合併，需逐段比對 |
-| `analysis/architecture.md` | `intro.md` | 合併 |
-| `analysis/awp-backend-overview.md` | `intro.md` + `index.md` | 抽出「12 個痛點」，其餘刪（與 `intro.md` 重複） |
+| `analysis/architecture.md` | `index.md` ＋ `conventions/` | 分層與 Pattern 併進規範，總覽併進 index |
+| `analysis/awp-backend-overview.md` | `index.md` | 只抽「12 個痛點」到已知問題，其餘刪 |
+| `intro.md` | 拆散 | 一手 spin → `flow/`、9 state → `modules/system-state`、4 錢包 → `modules/credit-bet-denom`、開機 → `flow/`、其餘併 `index.md` |
+| `quick-reference.md` | 拆散 | ABI 慣例與部署 checklist → `conventions/`、invariants → 各 `modules/` 頁；**enum／常數／錯誤碼不搬，改 grep code**（規則 5）|
 | `spec/feature-by-region.md` | `regions/feature-matrix.md` | 移動（已是對照表形狀） |
 | `spec/regulation-by-region.md` | `regions/regulation-matrix.md` | 移動（同上） |
 | 各子目錄 `README.md`（6 份，共 245 行） | — | **刪除**，內容併進 `index.md`（子目錄不設目錄頁） |

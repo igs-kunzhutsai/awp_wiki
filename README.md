@@ -18,17 +18,15 @@
 ```
 awp-wiki-repo/
 │
+├── WIKI-SPEC.md                  wiki 自己的規範（結構的權威定義）
 ├── AGENTS.md                     專案指引正本，所有 AI 共讀
-├── CLAUDE.md                     @AGENTS.md ＋ Claude 專屬
-├── WIKI-SPEC.md                  wiki 自己的規範
-├── README.md                     本檔
+├── CLAUDE.md                     `@AGENTS.md` ＋ Claude 專屬
+├── README.md                     人類入口
 ├── .kiro/
 │   └── steering/project.md       Kiro 入口，指向 AGENTS.md
 │
 ├── wiki/
-│   ├── index.md                  唯一導覽入口
-│   ├── intro.md                  從零理解
-│   ├── quick-reference.md        速查表
+│   ├── index.md                  唯一導覽入口（30 秒重點 ＋ 任務反查表）
 │   ├── glossary.md               術語表
 │   ├── log.md                    記 wiki 自己的變化（append-only）
 │   │
@@ -53,11 +51,15 @@ awp-wiki-repo/
 │       ├── legacy/               我們自己的舊版
 │       └── specs/                規格書、會議紀錄
 │
-└── scripts/                      檢查與同步腳本（本範本未含實作）
+└── scripts/
+    ├── check-wikilinks.js        掃 [[wikilink]] 是否解得開
+    ├── check-orphans.js          找沒人連得到的頁（排除 raw/ 與 _example*）
+    ├── api-diff.js               比對兩版 header 的 API 增減
+    └── sync-to-outline.js        推送到 Outline（raw/ 不推）
 ```
 
-> `wiki/` 底下的 `index.md`、`intro.md`、`quick-reference.md`、`glossary.md`、`log.md`
-> 是**目標結構**，本範本尚未含內容，建庫時自行建立。
+> `wiki/` 底下的 `index.md`、`glossary.md`、`log.md` 是**目標結構**，
+> 本範本尚未含內容，建庫時自行建立。
 
 ### 關於各目錄的 README
 
