@@ -40,6 +40,7 @@ updated: 2026-08-19
 | 查某地區的功能／法規要求 | `regions/` |
 | 查某專案的設定值 | `projects/<專案>/setup.md` |
 | 查某專案踩過的雷 | `projects/<專案>/issues.md` |
+| 查術語、看不懂的縮寫 | [[glossary]] |
 | **查 enum／常數／錯誤碼** | **不要查 wiki，直接 grep 基準 repo**（規則 5）|
 | 查函式精確簽章 | 看 header，wiki 不維護簽章 |
 
@@ -90,5 +91,5 @@ updated: 2026-08-19
 |---|---|
 | 原始素材、匯入文件、舊版 | `raw/`（不列在本頁，見 `raw/README.md`）|
 | 法規原文 | 另有專門的法規知識庫 |
-| wiki 自己的變更記錄 | `log.md` |
+| wiki 自己的變更記錄 | [[log]] |
 | 結構與規範 | 根目錄 `WIKI-SPEC.md` |
