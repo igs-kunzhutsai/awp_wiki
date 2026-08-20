@@ -9,7 +9,8 @@
 | 這個 wiki 涵蓋什麼、不涵蓋什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §1 |
 | 目錄結構、各目錄放什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §2 |
 | 新的一頁該放哪 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §3 |
-| 頁面格式怎麼寫 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §4–5 |
+| 一頁長什麼樣、每個欄位是什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §4 |
+| 內容怎麼寫、出處怎麼附 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §5 |
 | 有哪些規則 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §6 |
 | 平常怎麼操作這個 wiki | [`WIKI-SPEC.md`](WIKI-SPEC.md) §7 |
 | AI 開工前該讀什麼 | [`AGENTS.md`](AGENTS.md) |
