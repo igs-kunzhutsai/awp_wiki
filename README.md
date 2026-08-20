@@ -16,25 +16,61 @@
 ## 目錄結構
 
 ```
-wiki/
-├── index.md            唯一導覽入口
-├── intro.md            從零理解
-├── quick-reference.md  速查表
-├── glossary.md         術語表
-├── log.md              記 wiki 自己的變化（append-only）
+awp-wiki-repo/
 │
-├── modules/        有什麼功能（一模組一頁）
-├── flow/           怎麼用（跨模組流程）
-├── conventions/    寫 code 的規範
-├── decisions/      為什麼這樣設計
-├── regions/        跨專案的地區對照表
-├── projects/       各專案特有（一專案一目錄）
-└── raw/            原始素材，唯讀，不進 index
+├── AGENTS.md                     專案指引正本，所有 AI 共讀
+├── CLAUDE.md                     @AGENTS.md ＋ Claude 專屬
+├── WIKI-SPEC.md                  wiki 自己的規範
+├── README.md                     本檔
+├── .kiro/
+│   └── steering/project.md       Kiro 入口，指向 AGENTS.md
+│
+├── wiki/
+│   ├── index.md                  唯一導覽入口
+│   ├── intro.md                  從零理解
+│   ├── quick-reference.md        速查表
+│   ├── glossary.md               術語表
+│   ├── log.md                    記 wiki 自己的變化（append-only）
+│   │
+│   ├── modules/                  有什麼功能（一模組一頁）
+│   │   ├── README.md             說明本目錄放什麼
+│   │   └── _example-module.md    範例頁
+│   │
+│   ├── flow/                     怎麼用（跨模組流程）
+│   ├── conventions/              寫 code 的規範
+│   ├── decisions/                為什麼這樣設計
+│   ├── regions/                  跨專案的地區對照表
+│   │
+│   ├── projects/                 各專案特有（一專案一資料夾）
+│   │   ├── README.md
+│   │   └── _example-project/     範例專案
+│   │       ├── setup.md          設定、bet／denom 表（地區用表格欄位）
+│   │       └── issues.md         只有這專案踩過的雷
+│   │
+│   └── raw/                      原始素材，唯讀，不進 index
+│       ├── README.md             raw 自己的入口
+│       ├── outline/              從 Outline 匯入的
+│       ├── legacy/               我們自己的舊版
+│       └── specs/                規格書、會議紀錄
+│
+└── scripts/                      檢查與同步腳本（本範本未含實作）
 ```
 
-**子目錄不設目錄頁**，導覽全部集中在 `wiki/index.md`。唯一例外是 `raw/README.md`，因為 `raw/` 不進 index。
+> `wiki/` 底下的 `index.md`、`intro.md`、`quick-reference.md`、`glossary.md`、`log.md`
+> 是**目標結構**，本範本尚未含內容，建庫時自行建立。
 
-各目錄放什麼、不放什麼，見 `WIKI-SPEC.md` §2。
+### 關於各目錄的 README
+
+每個目錄都有一份 `README.md`，但它**只寫「這個目錄放什麼、不放什麼、命名怎麼取」**——
+那是規則，不會過期。
+
+它**不列出本目錄有哪些頁**——那是清單，會過期。
+頁面清單只存在 `wiki/index.md` 一處，避免兩邊各自漂移。
+
+`wiki/raw/README.md` 是唯一同時兼作入口的例外，因為 `raw/` 不進 `index.md`，
+否則沒有任何地方查得到裡面有什麼。
+
+各目錄放什麼、不放什麼的完整定義，見 `WIKI-SPEC.md` §2。
 
 ## 核心設計
 
