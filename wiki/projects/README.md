@@ -1,10 +1,7 @@
 # Projects
 
-每個 Project 目錄名稱與 YAML 標頭都必須標示引擎，例如：
+新版正式 Project 目錄位於本目錄的 `02_Projects/` 對應入口：[`wiki/02_Projects/`](../02_Projects/README.md)。
 
-```text
-project-alpha-cocos/
-project-alpha-unity/
-```
+Project 文件必須在 YAML Metadata 標示 `engine`、`markets`、`board`、`compliance` 與 Owner，必要文件依根目錄 `WIKI-SPEC.md` 第 8 節建立。
 
-Project 文件至少要有 `engine: cocos` 或 `engine: unity`。
+本目錄既有頁面保留作遷移來源，不再定義新的 Project 規則。

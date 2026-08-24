@@ -1,164 +1,221 @@
 # AWP Wiki 規範
 
 > 狀態：新版基線
-> 本文件是 AWP Wiki 現行規則的唯一權威來源。`AGENTS.md`、`CLAUDE.md` 與其他入口只引用本文件，不複製另一套規則。
+> 本文件是 AWP Wiki 現行規則的唯一權威來源。其他入口只引用本文件，不複製另一套規則。
 
-## 1. 目的與內容邊界
+## 1. 核心原則
 
-AWP Wiki 用來保存程式碼不會直接說清楚、但團隊需要重複理解的知識：架構、流程、模組契約、設計決策、操作限制、踩雷紀錄與產品案例。
+本 Wiki 的目標是讓知識「找得到、信得過、可追溯」。
 
-- 精確 API 簽章、enum、常數與實作細節以 source code 為準，不在 Wiki 維護容易過期的副本。
-- Wiki 頁面必須能回到來源或 Raw 紀錄查證。
-- 本地 Markdown 是正本；Outline 或其他瀏覽介面是發布鏡像。
+- 一份文件只有一個主要歸屬位置。
+- 目錄定義主要責任；跨市場、引擎、板底、來源與法規用 Metadata 關聯。
+- 本地 Markdown 是正本，Outline 網站是發布鏡像。
+- 正式知識寫架構、流程、契約、決策、限制與案例；精確 API 簽章、enum、常數與實作細節以 source code 為準。
+- 事實、目前實作、建議方案與待確認事項必須分開標示。
 - 不確定內容標記 `⚠️ 待確認`，不得把推測寫成確定事實。
 
-## 2. 三層知識管線
+## 2. 知識管線與權限
 
 ```text
 團隊成員上傳 Raw
         ↓
-YAML 與格式檢查
+YAML／Metadata 檢查
         ↓
-Wiki Agent 產生 Curated
+Wiki Agent 整理到對應正式目錄
         ↓
-Wiki Agent 更新 Outline
+人工審查與 Git PR
         ↓
-產生變更摘要、Git commit 與 Pull Request
+同步到 Outline 網站
 ```
 
-| 層級 | 位置 | 目的 | 編輯權限 |
+| 層級 | 位置 | 用途 | 編輯原則 |
 | --- | --- | --- | --- |
-| Raw | `wiki/raw/` | 保存原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正 |
-| Curated | `wiki/curated/` | AI 依 Raw 整理出的可搜尋中間層 | Wiki Agent 產生；人工不可直接修改 |
-| Outline | `wiki/outline/` | 對外目錄、摘要與導覽 | Wiki Agent 產生；人工不可直接修改 |
-| Maintained | `wiki/` 其他正式領域目錄 | 經審查、可被團隊引用的知識 | 依 PR 與 Owner 審查流程修改 |
+| Raw | `wiki/raw/` | 原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正；不作為現況依據 |
+| 正式知識 | `wiki/00_Governance/` 至 `wiki/10_Operations/` | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
+| Archive | `wiki/99_Archive/` | 停用、過期與歷史內容 | 預設不納入 LLM 檢索 |
+| Outline | Outline 網站 | 給人類瀏覽的發布鏡像 | 不作為本地正本 |
 
-Curated 或 Outline 發現錯誤時，回到 Raw 補充或修正來源，再重新執行 Wiki Agent；不得直接手改 AI 產物。
+不建立 `wiki/curated/` 或 `wiki/outline/` 平行層。AI 整理完成後，直接寫入對應正式目錄；錯誤要回到 Raw 修正來源，再重新產生。
 
-## 3. 目錄與 11 個知識領域
+## 3. 目錄架構
 
-正式知識分類採用以下 11 個領域。新內容只能選一個主要領域，跨領域內容以連結或標籤補足，不複製成多份。
-
-| 編號 | 領域 | 建議內容 |
-| --- | --- | --- |
-| 01 | Foundations | 基礎概念、術語、背景與學習路徑 |
-| 02 | Models | 模型家族、能力、限制、版本與選型 |
-| 03 | Data & Knowledge | 資料、知識庫、切分、metadata 與來源 |
-| 04 | Prompting | Prompt 設計、上下文、結構化輸出與防注入 |
-| 05 | Retrieval & RAG | Embedding、檢索、重排、引用與更新 |
-| 06 | Agents & Tools | Agent、工具呼叫、工作流與權限邊界 |
-| 07 | Application Engineering | SDK、服務整合、快取、串流與錯誤處理 |
-| 08 | Evaluation | 品質、成本、延遲、安全、回歸與上線門檻 |
-| 09 | Safety & Governance | 安全、隱私、法規、審查與風險管理 |
-| 10 | Operations | 監控、事件、版本、Fallback、成本與退場 |
-| 11 | Products & Case Studies | 產品案例、使用模式、決策與經驗回饋 |
-
-建議目錄：
+正式目錄與參考架構頁一致：
 
 ```text
 wiki/
-├── index.md                 # 正式導覽入口
-├── raw/                     # Raw：團隊可上傳，禁止當成現況依據
-├── curated/                 # AI 產物：鎖定
-├── outline/                 # AI 產物：鎖定
-├── foundations/
-├── models/
-├── data-knowledge/
-├── prompting/
-├── retrieval-rag/
-├── agents-tools/
-├── application-engineering/
-├── evaluation/
-├── safety-governance/
-├── operations/
-├── products-case-studies/
-├── modules/                 # 依引擎分流
-│   ├── cocos/
-│   └── unity/
-├── projects/                # 每個 Project 必須明示引擎
-├── decisions/
-├── glossary.md
-└── log.md                   # append-only
+├── 00_Governance/           # 治理與規範
+├── 01_Architecture/         # 共用技術架構
+├── 02_Projects/             # 實際交付專案
+├── 03_Game-Library/         # 可移植遊戲庫
+├── 04_Modules/              # 可重用模組
+│   ├── Cocos/               # Cocos Module
+│   ├── Unity/               # Unity Module
+│   ├── SAS/
+│   ├── Backend/
+│   ├── IGSLib/
+│   └── Platform/            # OTA／TPM／USB 更新等
+├── 05_Compliance/           # 法規與專業分析
+├── 06_Markets/              # 市場差異資訊
+├── 07_Engineering/          # 工程方法
+├── 08_Tools/                # 工具與評估
+├── 09_AI-Knowledge/          # LLM 專用知識
+├── 10_Operations/           # 維運知識
+├── 99_Archive/              # 停用、過期與歷史內容
+├── raw/                     # Raw 原始資料，不進正式導覽
+├── index.md                 # 唯一主要導覽入口
+├── glossary.md              # 共用術語
+└── log.md                   # append-only 變更紀錄
 ```
 
-既有內容可在遷移完成前留在原目錄；新增或改寫內容依新版 11 領域與三層管線規則處理。
+既有舊分類頁面在完成內容與連結遷移前保留，不視為新版架構；新頁面依上述目錄建立。
 
-## 4. Module 與 Project 規則
+## 4. 各知識域範圍
 
-- `Module` 固定依引擎分為 `modules/cocos/` 與 `modules/unity/`。
-- Cocos 與 Unity 的內容不可混放；共同內容放在適合的知識領域。
-- `Project` 目錄名稱必須寫明引擎，例如 `project-alpha-cocos/`、`project-alpha-unity/`。
-- Project 文件的 YAML 標頭也必須有 `engine: cocos` 或 `engine: unity`。
-- 若同一 Project 同時支援兩個引擎，仍須分別建立引擎目錄，並用連結共用共同規則。
+| 編號 | 目錄 | 內容範圍 |
+| --- | --- | --- |
+| 00 | Governance | 規範、角色、權限、文件生命週期、ADR 與衝突優先順序 |
+| 01 | Architecture | 共用系統架構、邊界、關鍵流程與整合關係 |
+| 02 | Projects | 實際交付專案、專案設定、建置、測試、法規對照與已知問題 |
+| 03 | Game Library | 可移植遊戲、遊戲規格、機率、素材、平台 Adapter 與發行 |
+| 04 | Modules | 可重用模組，例如 SAS、Backend、IGSLib、OTA、TPM、USB 更新 |
+| 05 | Compliance | 法規原文索引、專業分析、條款與產品對照 |
+| 06 | Markets | 市場、地區、客戶與平台差異；不重複存放共用內容 |
+| 07 | Engineering | 編譯、測試、CI/CD、Coding Style、工具流程與開發方法 |
+| 08 | Tools | 工具、評估方法、Golden Q&A、檢查腳本與知識品質工具 |
+| 09 | AI-Knowledge | LLM 使用規範、Prompt、檢索、Agent 與知識評估 |
+| 10 | Operations | 發布、監控、事件、回滾、維運與生命週期管理 |
+| 99 | Archive | 停用、過期與歷史內容，預設不納入 LLM 檢索 |
 
-## 5. Raw 格式
+## 5. 分類與 Metadata
 
-Raw 的路徑採「外層分類＋團隊或專案＋年月」：
+專案、遊戲與模組使用實體目錄；其他維度使用受控 Metadata，不因每個市場或引擎複製一份文件。
+
+| 維度 | 方式 | 範例 |
+| --- | --- | --- |
+| 專案、遊戲、模組 | 實體目錄 | `02_Projects/PR-M01P-G001` |
+| 市場 | 目錄＋ Metadata | `markets: [US, PR]` |
+| 遊戲引擎 | Metadata | `engine: cocos-creator` |
+| 板底 | Metadata | `board: [M01P]` |
+| 來源 | Metadata | `source: original` |
+| 畫面配置 | Metadata | `screens: 2 · landscape` |
+| 風格 | Metadata | `style: [latin]` |
+| 法規 | Metadata＋關聯文件 | `compliance: [SAS, GLI-11]` |
+| 機率 | 受控模型編號 | `math_model_id: MATH-G001-V3` |
+
+Metadata 必須使用受控詞彙，不同文件不可混用 `Cocos`、`CocosCreator`、`cocos_creator` 等近義值。
+
+## 6. Module 與 Project 規則
+
+- Module 目錄依引擎分為 `04_Modules/Cocos/` 與 `04_Modules/Unity/`。
+- Cocos 與 Unity Module 不可混放；共用內容放到適合的知識域。
+- Project 放在 `02_Projects/`，目錄名稱必須清楚標示專案與必要識別資訊。
+- Project 文件 YAML 必須有 `engine: cocos-creator`、`engine: unity` 或其他受控引擎值。
+- 若 Project 同時支援多個引擎，以 Metadata 陣列記錄，並在內容中清楚分段。
+
+## 7. Raw 格式
+
+Raw 採外層分類、團隊／專案與年月路徑：
 
 ```text
 wiki/raw/<domain>/<team-or-project>/YYYY/MM/<raw-file>.md
 ```
 
-每個 Raw 檔案開頭必須有簡易 YAML 標頭：
+每個 Raw 檔案必須以簡易 YAML 標頭開始：
 
 ```yaml
 title: "文件標題"
-domain: "application-engineering"
-engine: "cocos" # cocos | unity | both | n/a
+domain: "04_Modules"
+engine: "cocos-creator" # cocos-creator | unity | both | n/a
 source_type: "meeting" # meeting | note | ticket | document | chat
+source: "original"
 owner: "@name"
 captured_at: "2026-08-24"
 status: "raw"
 ```
 
-YAML 後接原始內容。Raw 階段不要刪除脈絡、過度潤飾或自行推導結論。
+YAML 後接原始內容。Raw 不刪除脈絡、不過度潤飾、不自行推導結論。
 
-## 6. 頁面 Metadata
+## 8. Project 文件基線
 
-正式維護頁面至少要有：
+每個 Project 至少具備以下 11 份文件：
 
-```yaml
-type: module | flow | convention | decision | project | guide
-domain: foundations | models | data-knowledge | prompting | retrieval-rag | agents-tools | application-engineering | evaluation | safety-governance | operations | products-case-studies
-status: draft | review | stable | deprecated
-owner: "@name"
-updated: YYYY-MM-DD
-sources: []
+```text
+README.md
+requirements.md
+architecture.md
+repository-map.md
+build-guide.md
+ci-cd.md
+test-plan.md
+release-checklist.md
+compliance-mapping.md
+known-issues.md
+CHANGELOG.md
 ```
 
-Curated 與 Outline 由 Agent 產生時，必須保留來源頁面與產生時間；Raw 使用第 5 節的專用標頭。
+`README.md` 必須回答：專案是什麼、解決什麼問題、負責團隊、引擎／板底／市場、如何取得與編譯、依賴哪些遊戲與模組、CI/CD 與發布位置、已知限制與風險。
 
-## 7. Wiki Agent 規範
+## 9. 文件 Metadata 與生命週期
 
-Wiki Agent 每週至少執行一次，重大事件、架構決策或 Raw 大量新增後可手動觸發。
+正式頁面至少包含：
 
-執行順序：
+```yaml
+status: draft | reviewing | approved | deprecated | archived
+owner: "@name"
+updated: YYYY-MM-DD
+source: original | imported | inferred
+markets: []
+engine: "cocos-creator"
+board: []
+compliance: []
+```
 
-1. 讀取上次 checkpoint 後新增或修改的 Raw。
-2. 驗證 YAML、領域、引擎欄位與敏感資料。
-3. 只根據 Raw 產生或更新 Curated，保留來源連結。
-4. 依 Curated 更新 Outline，不捏造未存在的目錄或結論。
-5. 產生變更摘要與受影響頁面清單。
-6. 執行 Markdown、連結、孤島與敏感資料檢查。
-7. 建立短生命週期分支、commit 與 Pull Request。
+文件生命週期：
 
-Wiki Agent 不得 force push、刪除 Git 歷史、修改 Raw 來源或未經審查直接合併 `main`。
+```text
+draft → reviewing → approved → deprecated → archived
+```
 
-## 8. Git 與審查
+草稿、過期文件與會議紀錄不可混入正式知識層；`99_Archive` 預設不納入 LLM 檢索。
 
-- `main`：穩定、可發布的正本。
-- `docs/<topic>-<short-name>`：一般文件變更。
-- `adr/<number>-<short-name>`：重大決策。
-- Commit 使用 Conventional Commits，例如 `docs: update recovery guide`。
-- 一個 commit 聚焦一個意圖；破壞性結構調整拆成遷移與清理兩個 PR。
-- 一般文件至少一位領域 Maintainer 審查。
-- 架構、資安、資料治理或跨團隊規範需兩位 Maintainer。
-- commit 與 push 由使用者決定，Agent 不主動執行。
+## 10. Wiki Agent 與 Git 策略
 
-## 9. 維護週期
+Wiki Agent 每週至少執行一次；Raw 大量新增、重大決策或架構變更後可手動觸發。
+
+1. 讀取新增或修改的 Raw。
+2. 驗證 YAML、Metadata、來源與敏感資料。
+3. 整理到對應正式目錄，不建立 `curated/` 平行層。
+4. 產生變更摘要、來源清單與受影響頁面。
+5. 執行 Markdown、wikilink、孤島、Metadata 與 secrets 檢查。
+6. 建立短生命週期分支與 Pull Request。
+7. 審查通過後同步到 Outline。
+
+Git 倉庫策略：
+
+- Wiki 以一個主要倉庫為主；機密資料另設受控倉庫。
+- 遊戲原則上一款遊戲一個倉庫。
+- Module 僅在有獨立發布週期、版本能力、CI/CD 或團隊責任時拆倉。
+- Project 在市場客製幅度大、權限不同或需獨立送審時可拆倉。
+- 機率模型與法規原文使用受控權限的獨立倉庫。
+- Agent 不得 force push、刪除歷史或未經審查直接合併 `main`。
+
+## 11. 治理規範
+
+- 一頁一主題，縮小 LLM 檢索範圍。
+- 文件開頭結論先行，列出摘要、適用範圍、限制與狀態。
+- 明確分離正式規範、目前實作、建議方案與待確認事項。
+- 使用專案 ID、版本與日期，不使用「目前平台」或「舊版」等模糊代稱。
+- 文件必須連結 Git 倉庫、Tag、Commit、Release 或送審版本。
+- LLM 回答必須附文件 ID、版本、狀態與來源連結。
+- 建立 Golden Q&A 驗證檢索是否命中正確文件。
+- 衝突優先順序：已核准法規／規格 → ADR → 專案正式文件 → 模組文件 → FAQ → 會議紀錄。
+
+一般文件由一位領域 Maintainer 審查；架構、資安、資料治理與跨團隊規範由兩位 Maintainer 審查。
+
+## 12. 維護週期
 
 - Raw：團隊成員有新資料即可提交。
-- Curated／Outline：Wiki Agent 每週至少更新一次。
-- 有效文件超過 90 天未檢視，列入維護清單。
-- 失效文件標記 `deprecated`，除非確認無追溯價值，不直接刪除。
-- `wiki/log.md` 只能 append，記錄規則與知識管線的重要變更。
+- 正式知識：Wiki Agent 每週至少檢查一次。
+- 文件超過 90 天未檢視，列入維護清單。
+- `wiki/log.md` 只能 append，記錄規則、分類與重大知識變更。
+- 過期內容先標記 `deprecated`，確認無追溯價值後才可封存。

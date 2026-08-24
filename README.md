@@ -1,37 +1,46 @@
 # AWP Backend Wiki
 
-AWP 團隊知識庫，供團隊成員與 AI Agent 查詢、整理與維護。
+AWP 團隊知識庫，目標是讓知識找得到、信得過、可追溯，並與 LLM Wiki Blueprint 採用相同的目錄架構。
 
 ## 現行入口
 
 - [Wiki 規範](WIKI-SPEC.md)
 - [AI Agent 指引](AGENTS.md)
 - [Wiki 導覽](wiki/index.md)
-- [11 個知識領域與資料管線](WIKI-SPEC.md#3-目錄與-11-個知識領域)
+- [Outline 發布鏡像](https://outline01.igsgame.com/doc/awp-nZkwSUrVBG)
 
-## 新版知識管線
+## 目錄架構
+
+```text
+wiki/
+├── 00_Governance/
+├── 01_Architecture/
+├── 02_Projects/
+├── 03_Game-Library/
+├── 04_Modules/
+│   ├── Cocos/
+│   └── Unity/
+├── 05_Compliance/
+├── 06_Markets/
+├── 07_Engineering/
+├── 08_Tools/
+├── 09_AI-Knowledge/
+├── 10_Operations/
+└── 99_Archive/
+```
+
+另有 `wiki/raw/` 作為團隊原始資料入口；Raw 不直接進正式導覽。既有頁面會依遷移計畫逐步歸檔或搬入上述領域，不先刪除知識。
+
+## 知識管線
 
 ```text
 團隊成員上傳 Raw
         ↓
-Wiki Agent 整理 Curated
+Wiki Agent 整理到對應正式目錄
         ↓
-Wiki Agent 更新 Outline
+Git PR 審查
         ↓
-Git commit / Pull Request
+同步到 Outline
 ```
 
-- `wiki/raw/`：團隊成員可新增與修正的原始資料。
-- `wiki/curated/`：AI 整理後的中間層，人工不可直接修改。
-- `wiki/outline/`：AI 產生的目錄與導覽，人工不可直接修改。
-- 其餘正式知識頁依 [11 個知識領域](WIKI-SPEC.md#3-目錄與-11-個知識領域) 管理。
-
-## AWP 特別規則
-
-- Module 依引擎分為 `Cocos` 與 `Unity`。
-- Project 目錄名稱與 YAML 標頭都必須標示所屬引擎。
-- Raw 必須使用外層分類與簡易 YAML 標頭。
-- Wiki Agent 每週至少執行一次整理與 Git PR 流程。
-- 本地 Markdown 是正本；Outline 是發布鏡像。
-
-既有 Wiki 內容會依遷移計畫逐步對應到新版分類；在遷移完成前，不刪除既有知識頁。
+AI 整理後的正式知識由 Agent 與 PR 流程保護，不建立獨立的 `curated/` 或 `outline/` 平行目錄。
