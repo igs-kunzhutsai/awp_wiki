@@ -16,7 +16,6 @@ raw/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
 ├── 10_Incident-and-Problem-Records/
-└── 99_Archive/
 ```
 
 路徑格式：`raw/<same-domain>/<team-or-project>/YYYY/MM/<raw-file>.md`

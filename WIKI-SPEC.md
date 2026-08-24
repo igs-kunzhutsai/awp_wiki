@@ -32,7 +32,6 @@ Wiki Agent 整理到對應正式目錄
 | --- | --- | --- | --- |
 | Raw | `wiki/raw/` | 原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正；不作為現況依據 |
 | 正式知識 | `wiki/` 下的正式知識域 | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
-| Archive | `wiki/99_Archive/` | 停用、過期與歷史內容 | 預設不納入 LLM 檢索 |
 | Outline | Outline 網站 | 給人類瀏覽的發布鏡像 | 不作為本地正本 |
 
 不建立 `wiki/curated/` 或 `wiki/outline/` 平行層。AI 整理完成後，直接寫入對應正式目錄；錯誤要回到 Raw 修正來源，再重新產生。
@@ -59,7 +58,6 @@ wiki/
 ├── 08_Tools/                # 工具與評估
 ├── 09_AI-and-Wiki-Agents/    # AI 與 Wiki Agent
 ├── 10_Incident-and-Problem-Records/ # 問題與事件紀錄
-├── 99_Archive/              # 停用、過期與歷史內容
 ├── raw/                     # Raw 原始資料，與正式知識域一一對應
 ├── index.md                 # 唯一主要導覽入口
 ├── glossary.md              # 共用術語
@@ -82,7 +80,6 @@ wiki/
 | 08 | Tools | 工具、評估方法、Golden Q&A、檢查腳本與知識品質工具 |
 | 09 | AI and Wiki Agents | LLM、Prompt、檢索、Wiki Agent 與知識評估 |
 | 10 | Incident and Problem Records | 問題、事故、影響、原因、處置、修復與預防措施紀錄 |
-| 99 | Archive | 停用、過期與歷史內容，預設不納入 LLM 檢索 |
 
 ## 5. 分類與 YAML 欄位
 
@@ -128,7 +125,6 @@ wiki/raw/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
 ├── 10_Incident-and-Problem-Records/
-└── 99_Archive/
 ```
 
 Raw 檔案再依團隊／專案與年月歸檔：
@@ -245,7 +241,7 @@ compliance: []
 draft → reviewing → approved → deprecated → archived
 ```
 
-草稿、過期文件與會議紀錄不可混入正式知識層；`99_Archive` 預設不納入 LLM 檢索。
+草稿與會議紀錄先留在 `wiki/raw/`；過期正式文件留在原本知識域，標記 `deprecated`，不要建立額外的封存分類。
 
 ## 10. Wiki Agent 與 Git 策略
 
@@ -287,4 +283,4 @@ Git 倉庫策略：
 - 正式知識：Wiki Agent 每週至少檢查一次。
 - 文件超過 90 天未檢視，列入維護清單。
 - `wiki/log.md` 只能 append，記錄規則、分類與重大知識變更。
-- 過期內容先標記 `deprecated`，確認無追溯價值後才可封存。
+- 過期內容在原本知識域標記 `deprecated`；Git 歷史保留過去版本，不另設封存目錄。

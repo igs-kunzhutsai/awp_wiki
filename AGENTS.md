@@ -38,7 +38,6 @@
 - 不准把不同市場、引擎或板底的同一知識複製成多份；使用 YAML 欄位關聯。
 - 不准提交密鑰、個資、客戶機密或未授權內容。
 - 不准刪 `wiki/log.md` 既有條目，只能 append。
-- `99_Archive` 預設不納入 LLM 檢索。
 - 不准 force push、刪除 Git 歷史或未經審查直接合併 `main`。
 - commit、push、合併與 Outline 發布由使用者決定，不主動執行。
 - token 不准寫進 Git 追蹤檔案，必須使用環境變數。

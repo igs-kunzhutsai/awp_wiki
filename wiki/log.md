@@ -31,3 +31,8 @@
 
 - 將 `10_Deployment-and-Maintenance` 改為 `10_Incident-and-Problem-Records`。
 - 第 10 類專注記錄問題、事故、影響、原因、處置、修復與預防措施。
+
+## 2026-08-24（移除封存分類）
+
+- 移除空的 `wiki/99_Archive/` 與 `wiki/raw/99_Archive/`。
+- 過期文件留在原本知識域並標記 `deprecated`；歷史版本由 Git 保留，不另設封存分類。

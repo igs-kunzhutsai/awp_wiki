@@ -25,10 +25,9 @@ wiki/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
 ├── 10_Incident-and-Problem-Records/
-└── 99_Archive/
 ```
 
-另有 `wiki/raw/` 作為團隊原始資料入口，並鏡像所有正式知識分類與 `99_Archive`；Raw 不直接進正式導覽。
+另有 `wiki/raw/` 作為團隊原始資料入口，並鏡像所有正式知識分類；Raw 不直接進正式導覽。
 
 ## 知識管線
 
