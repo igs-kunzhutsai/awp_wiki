@@ -91,7 +91,7 @@ wiki/
 | 市場 | 目錄＋YAML 欄位 | `markets: [US, PR]` |
 | 遊戲引擎 | YAML 欄位 | `engine: cocos-creator` |
 | 板底 | YAML 欄位 | `board: [M01P]` |
-| 來源 | YAML 欄位 | `source: original` |
+| 頁面類型 | YAML 欄位 | `type: meeting` |
 | 畫面配置 | YAML 欄位 | `screens: 2 · landscape` |
 | 風格 | YAML 欄位 | `style: [latin]` |
 | 法規 | YAML 欄位＋關聯文件 | `compliance: [SAS, GLI-11]` |
@@ -145,40 +145,46 @@ wiki/raw/02_Projects/PR-M01P-G001-Unity/2026/08/build-note.md
 ```yaml
 title: "文件標題"
 domain: "04_Modules"
-engine: "cocos-creator" # cocos-creator | unity | both | n/a
-source_type: "meeting" # meeting | note | ticket | document | chat
-source: "original"
+type: "meeting" # meeting | note | decision | guide | spec | analysis | issue
+status: "raw" # raw | draft | reviewing | approved | deprecated
 owner: "@name"
-captured_at: "2026-08-24"
-status: "raw"
+updated: "2026-08-24"
+engine: "cocos-creator" # cocos-creator | unity | both | n/a
+markets: []
+board: []
+compliance: []
 ```
 
-### Raw YAML 欄位定義
+### 共用 YAML 欄位定義
 
-Raw 的 YAML 是「文件標籤」，不是正文。每個欄位只描述這份資料是什麼、從哪裡來、誰負責；真正的會議內容或分析內容放在 YAML 結束後。
+Raw 與正式頁面使用同一套 YAML 欄位。YAML 是文件標籤，不是正文；真正的會議內容、分析內容或正式知識放在 YAML 結束後。
 
 | 欄位 | 必填 | 填寫方式 | 範例 |
 | --- | --- | --- | --- |
 | `title` | 是 | 人看得懂的文件標題 | `2026-08-24 AWP Wiki 規則會議` |
 | `domain` | 是 | 對應最上層目錄名稱；不可自創分類 | `00_Rules-and-Decisions`、`06_Markets` |
-| `engine` | 是 | 受控引擎值；沒有引擎填 `n/a` | `unity`、`cocos-creator`、`both`、`n/a` |
-| `source_type` | 是 | 原始資料種類 | `meeting`、`note`、`ticket`、`document`、`chat` |
-| `source` | 是 | 來源狀態；Raw 通常是 `original` 或 `imported` | `original` |
+| `type` | 是 | 文件內容的種類 | `meeting`、`decision`、`guide`、`spec`、`analysis`、`issue` |
+| `status` | 是 | 文件目前狀態 | `raw`、`draft`、`reviewing`、`approved`、`deprecated` |
 | `owner` | 是 | 負責補充或確認資料的人／團隊 | `@kunzhu`、`AWP-Research` |
-| `captured_at` | 是 | 收到、記錄或匯入資料的日期 | `2026-08-24` |
-| `status` | 是 | Raw 固定填 `raw` | `raw` |
+| `updated` | 是 | 這份文件最後記錄或更新的日期 | `2026-08-24` |
+| `engine` | 是 | 受控引擎值；沒有引擎填 `n/a` | `unity`、`cocos-creator`、`both`、`n/a` |
+| `markets` | 否 | 適用市場；沒有特定市場填 `[]` | `[US, TW]` |
+| `board` | 否 | 適用板底／硬體平台；沒有則填 `[]` | `[M01P]` |
+| `compliance` | 否 | 相關法規或規格；沒有則填 `[]` | `[GLI-11]` |
 
-Raw 範例：
+共同範例：
 
 ```yaml
 title: "2026-08-24 美國市場分析會議"
 domain: "06_Markets"
-engine: "unity"
-source_type: "meeting"
-source: "original"
-owner: "@kunzhu"
-captured_at: "2026-08-24"
+type: "meeting"
 status: "raw"
+owner: "@kunzhu"
+updated: "2026-08-24"
+engine: "unity"
+markets: [US]
+board: []
+compliance: []
 ```
 
 YAML 後接原始內容。Raw 不刪除脈絡、不過度潤飾、不自行推導結論。
@@ -205,40 +211,19 @@ CHANGELOG.md
 
 ## 9. 文件 YAML 欄位與生命週期
 
-正式頁面至少包含：
+所有 Raw 與正式頁面都使用上方共用 YAML。正式頁面只需要依生命週期更新 `status`，並持續更新 `updated`：
 
 ```yaml
-status: draft | reviewing | approved | deprecated | archived
-owner: "@name"
-updated: YYYY-MM-DD
-source: original | imported | inferred
-markets: []
-engine: "cocos-creator"
-board: []
-compliance: []
+status: "approved"
+updated: "2026-08-24"
 ```
 
-### 正式頁面 YAML 欄位定義
-
-正式頁面的 YAML 欄位用來讓 Agent 篩選、搜尋與判斷文件是否仍然有效：
-
-| 欄位 | 填寫方式 | 範例 |
-| --- | --- | --- |
-| `status` | 文件目前生命週期狀態 | `approved` |
-| `owner` | 維護與審查負責人／團隊 | `@kunzhu` |
-| `updated` | 正式頁面最後更新日期 | `2026-08-24` |
-| `source` | 內容來源狀態 | `original`、`imported`、`inferred` |
-| `markets` | 適用市場清單；沒有特定市場填 `[]` | `[US, TW]` |
-| `engine` | 適用引擎 | `unity`、`cocos-creator`、`both`、`n/a` |
-| `board` | 適用板底／硬體平台；沒有則填 `[]` | `[M01P]` |
-| `compliance` | 相關法規或規格；沒有則填 `[]` | `[GLI-11]` |
-
-簡單判斷：Raw 是「這份資料從哪裡來」，正式頁面是「這份知識現在是否可信、適用在哪裡」。
+這些共用欄位讓 Agent 能篩選、搜尋與判斷文件是否仍然有效。Raw 與正式頁面的差別只在 `status` 與內容整理程度，不再使用兩套 YAML。
 
 文件生命週期：
 
 ```text
-draft → reviewing → approved → deprecated → archived
+raw → draft → reviewing → approved → deprecated
 ```
 
 草稿與會議紀錄先留在 `wiki/raw/`；過期正式文件留在原本知識域，標記 `deprecated`，不要建立額外的封存分類。

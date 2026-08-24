@@ -27,14 +27,16 @@ raw/
 ```yaml
 title: "2026-08-24 美國市場分析會議"
 domain: "06_Markets"
-engine: "unity"
-source_type: "meeting"
-source: "original"
-owner: "@kunzhu"
-captured_at: "2026-08-24"
+type: "meeting"
 status: "raw"
+owner: "@kunzhu"
+updated: "2026-08-24"
+engine: "unity"
+markets: [US]
+board: []
+compliance: []
 ```
 
-欄位的詳細定義與正式 Wiki 的 YAML 範例，請看根目錄 `WIKI-SPEC.md` 的「Raw YAML 欄位定義」與「正式頁面 YAML 欄位定義」。
+欄位的詳細定義與 Raw、正式 Wiki 共用的 YAML 範例，請看根目錄 `WIKI-SPEC.md` 的「共用 YAML 欄位定義」。
 
 Raw 保留原始脈絡，不把推測改寫成結論；Wiki Agent 會將整理結果直接寫入對應的正式知識域，不建立 Curated 平行目錄。

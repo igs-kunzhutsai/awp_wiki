@@ -2,7 +2,8 @@
 type: index
 status: approved
 updated: 2026-08-24
-source: original
+domain: "00_Rules-and-Decisions"
+owner: "AWP Wiki"
 ---
 # AWP Wiki Index
 
@@ -38,7 +39,7 @@ wiki/raw/ → Wiki Agent → 正式知識域 → Git PR → Outline
 
 - `wiki/raw/` 與正式目錄使用相同分類；上傳 Raw 時先放入對應知識域，04 Modules 再放入 `Cocos/` 或 `Unity/`。
 - 一份文件只有一個主要目錄。
-- 市場、引擎、板底、來源、畫面、風格與法規使用 YAML 欄位關聯。
+- 市場、引擎、板底、畫面、風格與法規使用 YAML 欄位關聯。
 - `04_Modules/Cocos/` 與 `04_Modules/Unity/` 不可混放。
 - Project 放在 `02_Projects/`，資料夾名稱要含專案與引擎（例如 `PR-M01P-G001-Unity`），必要文件依 `WIKI-SPEC.md` 第 8 節建立。
 

@@ -36,3 +36,8 @@
 
 - 移除空的 `wiki/99_Archive/` 與 `wiki/raw/99_Archive/`。
 - 過期文件留在原本知識域並標記 `deprecated`；歷史版本由 Git 保留，不另設封存分類。
+
+## 2026-08-24（YAML 欄位統一）
+
+- Raw 與正式頁面改用同一套 YAML 欄位。
+- 移除容易混淆的來源與記錄時間欄位，改用共用的 `type` 與 `updated`。
