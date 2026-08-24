@@ -28,7 +28,7 @@
 ```
 
 - 團隊成員可新增與修正 `wiki/raw/`。
-- AI 整理後直接寫入 `00_Governance` 至 `10_Operations` 的對應目錄。
+- AI 整理後直接寫入 `00_Rules-and-Decisions` 至 `10_Deployment-and-Maintenance` 的對應目錄。
 - 不建立 `wiki/curated/` 或 `wiki/outline/` 平行層。
 - Module 依 Cocos／Unity 分流；Project 目錄與 Metadata 都必須標示引擎。
 

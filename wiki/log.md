@@ -17,3 +17,7 @@
 
 - 移除無用途的舊平行目錄：`conventions`、`decisions`、`flow`、`modules`、`projects`、`regions`。
 - `wiki/raw/` 建立與正式 Wiki 相同的 `00–10`、`99_Archive` 分類；`04_Modules` 再分 `Cocos` 與 `Unity`。
+
+## 2026-08-24（目錄命名清晰化）
+
+- 將正式 Wiki 與 Raw 的目錄名稱改為更直白的英文：`00_Rules-and-Decisions`、`07_Software-Development`、`09_AI-and-Wiki-Agents`、`10_Deployment-and-Maintenance`。

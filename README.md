@@ -13,7 +13,7 @@ AWP 團隊知識庫，目標是讓知識找得到、信得過、可追溯，並�
 
 ```text
 wiki/
-├── 00_Governance/
+├── 00_Rules-and-Decisions/
 ├── 01_Architecture/
 ├── 02_Projects/
 ├── 03_Game-Library/
@@ -22,10 +22,10 @@ wiki/
 │   └── Unity/
 ├── 05_Compliance/
 ├── 06_Markets/
-├── 07_Engineering/
+├── 07_Software-Development/
 ├── 08_Tools/
-├── 09_AI-Knowledge/
-├── 10_Operations/
+├── 09_AI-and-Wiki-Agents/
+├── 10_Deployment-and-Maintenance/
 └── 99_Archive/
 ```
 

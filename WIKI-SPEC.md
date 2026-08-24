@@ -31,7 +31,7 @@ Wiki Agent 整理到對應正式目錄
 | 層級 | 位置 | 用途 | 編輯原則 |
 | --- | --- | --- | --- |
 | Raw | `wiki/raw/` | 原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正；不作為現況依據 |
-| 正式知識 | `wiki/00_Governance/` 至 `wiki/10_Operations/` | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
+| 正式知識 | `wiki/00_Rules-and-Decisions/` 至 `wiki/10_Deployment-and-Maintenance/` | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
 | Archive | `wiki/99_Archive/` | 停用、過期與歷史內容 | 預設不納入 LLM 檢索 |
 | Outline | Outline 網站 | 給人類瀏覽的發布鏡像 | 不作為本地正本 |
 
@@ -43,7 +43,7 @@ Wiki Agent 整理到對應正式目錄
 
 ```text
 wiki/
-├── 00_Governance/           # 治理與規範
+├── 00_Rules-and-Decisions/  # 規範與決策
 ├── 01_Architecture/         # 共用技術架構
 ├── 02_Projects/             # 實際交付專案
 ├── 03_Game-Library/         # 可移植遊戲庫
@@ -56,10 +56,10 @@ wiki/
 │   └── Platform/            # OTA／TPM／USB 更新等
 ├── 05_Compliance/           # 法規與專業分析
 ├── 06_Markets/              # 市場差異資訊
-├── 07_Engineering/          # 工程方法
+├── 07_Software-Development/ # 程式開發與測試
 ├── 08_Tools/                # 工具與評估
-├── 09_AI-Knowledge/          # LLM 專用知識
-├── 10_Operations/           # 維運知識
+├── 09_AI-and-Wiki-Agents/    # AI 與 Wiki Agent
+├── 10_Deployment-and-Maintenance/ # 上線與維運
 ├── 99_Archive/              # 停用、過期與歷史內容
 ├── raw/                     # Raw 原始資料，與正式知識域一一對應
 ├── index.md                 # 唯一主要導覽入口
@@ -73,17 +73,17 @@ wiki/
 
 | 編號 | 目錄 | 內容範圍 |
 | --- | --- | --- |
-| 00 | Governance | 規範、角色、權限、文件生命週期、ADR 與衝突優先順序 |
+| 00 | Rules and Decisions | 規範、角色、權限、文件生命週期、ADR 與衝突優先順序 |
 | 01 | Architecture | 共用系統架構、邊界、關鍵流程與整合關係 |
 | 02 | Projects | 實際交付專案、專案設定、建置、測試、法規對照與已知問題 |
 | 03 | Game Library | 可移植遊戲、遊戲規格、機率、素材、平台 Adapter 與發行 |
 | 04 | Modules | 可重用模組，例如 SAS、Backend、IGSLib、OTA、TPM、USB 更新 |
 | 05 | Compliance | 法規原文索引、專業分析、條款與產品對照 |
 | 06 | Markets | 市場、地區、客戶與平台差異；不重複存放共用內容 |
-| 07 | Engineering | 編譯、測試、CI/CD、Coding Style、工具流程與開發方法 |
+| 07 | Software Development | 編譯、測試、CI/CD、Coding Style、工具流程與開發方法 |
 | 08 | Tools | 工具、評估方法、Golden Q&A、檢查腳本與知識品質工具 |
-| 09 | AI-Knowledge | LLM 使用規範、Prompt、檢索、Agent 與知識評估 |
-| 10 | Operations | 發布、監控、事件、回滾、維運與生命週期管理 |
+| 09 | AI and Wiki Agents | LLM、Prompt、檢索、Wiki Agent 與知識評估 |
+| 10 | Deployment and Maintenance | 發布、監控、事件、回滾、維運與生命週期管理 |
 | 99 | Archive | 停用、過期與歷史內容，預設不納入 LLM 檢索 |
 
 ## 5. 分類與 Metadata
@@ -118,7 +118,7 @@ Raw 必須使用與正式知識完全相同的外層分類，讓上傳者在來�
 
 ```text
 wiki/raw/
-├── 00_Governance/
+├── 00_Rules-and-Decisions/
 ├── 01_Architecture/
 ├── 02_Projects/
 ├── 03_Game-Library/
@@ -127,10 +127,10 @@ wiki/raw/
 │   └── Unity/
 ├── 05_Compliance/
 ├── 06_Markets/
-├── 07_Engineering/
+├── 07_Software-Development/
 ├── 08_Tools/
-├── 09_AI-Knowledge/
-├── 10_Operations/
+├── 09_AI-and-Wiki-Agents/
+├── 10_Deployment-and-Maintenance/
 └── 99_Archive/
 ```
 
@@ -156,6 +156,34 @@ engine: "cocos-creator" # cocos-creator | unity | both | n/a
 source_type: "meeting" # meeting | note | ticket | document | chat
 source: "original"
 owner: "@name"
+captured_at: "2026-08-24"
+status: "raw"
+```
+
+### Raw YAML 欄位定義
+
+Raw 的 YAML 是「文件標籤」，不是正文。每個欄位只描述這份資料是什麼、從哪裡來、誰負責；真正的會議內容或分析內容放在 YAML 結束後。
+
+| 欄位 | 必填 | 填寫方式 | 範例 |
+| --- | --- | --- | --- |
+| `title` | 是 | 人看得懂的文件標題 | `2026-08-24 AWP Wiki 規則會議` |
+| `domain` | 是 | 對應最上層目錄名稱；不可自創分類 | `00_Rules-and-Decisions`、`06_Markets` |
+| `engine` | 是 | 受控引擎值；沒有引擎填 `n/a` | `unity`、`cocos-creator`、`both`、`n/a` |
+| `source_type` | 是 | 原始資料種類 | `meeting`、`note`、`ticket`、`document`、`chat` |
+| `source` | 是 | 來源狀態；Raw 通常是 `original` 或 `imported` | `original` |
+| `owner` | 是 | 負責補充或確認資料的人／團隊 | `@kunzhu`、`AWP-Research` |
+| `captured_at` | 是 | 收到、記錄或匯入資料的日期 | `2026-08-24` |
+| `status` | 是 | Raw 固定填 `raw` | `raw` |
+
+Raw 範例：
+
+```yaml
+title: "2026-08-24 美國市場分析會議"
+domain: "06_Markets"
+engine: "unity"
+source_type: "meeting"
+source: "original"
+owner: "@kunzhu"
 captured_at: "2026-08-24"
 status: "raw"
 ```
@@ -196,6 +224,23 @@ engine: "cocos-creator"
 board: []
 compliance: []
 ```
+
+### 正式頁面 Metadata 欄位定義
+
+正式頁面的 Metadata 用來讓 Agent 篩選、搜尋與判斷文件是否仍然有效：
+
+| 欄位 | 填寫方式 | 範例 |
+| --- | --- | --- |
+| `status` | 文件目前生命週期狀態 | `approved` |
+| `owner` | 維護與審查負責人／團隊 | `@kunzhu` |
+| `updated` | 正式頁面最後更新日期 | `2026-08-24` |
+| `source` | 內容來源狀態 | `original`、`imported`、`inferred` |
+| `markets` | 適用市場清單；沒有特定市場填 `[]` | `[US, TW]` |
+| `engine` | 適用引擎 | `unity`、`cocos-creator`、`both`、`n/a` |
+| `board` | 適用板底／硬體平台；沒有則填 `[]` | `[M01P]` |
+| `compliance` | 相關法規或規格；沒有則填 `[]` | `[GLI-11]` |
+
+簡單判斷：Raw 是「這份資料從哪裡來」，正式頁面是「這份知識現在是否可信、適用在哪裡」。
 
 文件生命週期：
 

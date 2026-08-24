@@ -12,17 +12,17 @@ source: original
 
 | 編號 | 目錄 | 用途 |
 | --- | --- | --- |
-| 00 | [Governance](00_Governance/README.md) | 治理與規範 |
+| 00 | [Rules and Decisions](00_Rules-and-Decisions/README.md) | 規範與決策 |
 | 01 | [Architecture](01_Architecture/README.md) | 共用技術架構 |
 | 02 | [Projects](02_Projects/README.md) | 實際交付專案 |
 | 03 | [Game Library](03_Game-Library/README.md) | 可移植遊戲庫 |
 | 04 | [Modules](04_Modules/README.md) | 可重用模組 |
 | 05 | [Compliance](05_Compliance/README.md) | 法規與專業分析 |
 | 06 | [Markets](06_Markets/README.md) | 市場差異資訊 |
-| 07 | [Engineering](07_Engineering/README.md) | 工程方法 |
+| 07 | [Software Development](07_Software-Development/README.md) | 程式開發與測試 |
 | 08 | [Tools](08_Tools/README.md) | 工具與評估 |
-| 09 | [AI Knowledge](09_AI-Knowledge/README.md) | LLM 專用知識 |
-| 10 | [Operations](10_Operations/README.md) | 維運知識 |
+| 09 | [AI and Wiki Agents](09_AI-and-Wiki-Agents/README.md) | AI 與 Wiki Agent |
+| 10 | [Deployment and Maintenance](10_Deployment-and-Maintenance/README.md) | 上線與維運 |
 | 99 | [Archive](99_Archive/README.md) | 停用、過期與歷史內容 |
 
 ## 共用入口
