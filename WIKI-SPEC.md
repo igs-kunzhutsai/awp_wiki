@@ -61,13 +61,13 @@ wiki/
 ├── 09_AI-Knowledge/          # LLM 專用知識
 ├── 10_Operations/           # 維運知識
 ├── 99_Archive/              # 停用、過期與歷史內容
-├── raw/                     # Raw 原始資料，不進正式導覽
+├── raw/                     # Raw 原始資料，與正式知識域一一對應
 ├── index.md                 # 唯一主要導覽入口
 ├── glossary.md              # 共用術語
 └── log.md                   # append-only 變更紀錄
 ```
 
-既有舊分類頁面在完成內容與連結遷移前保留，不視為新版架構；新頁面依上述目錄建立。
+舊分類目錄已移除；新頁面與新 Raw 一律依上述目錄建立，不再新增平行分類入口。
 
 ## 4. 各知識域範圍
 
@@ -108,16 +108,43 @@ Metadata 必須使用受控詞彙，不同文件不可混用 `Cocos`、`CocosCre
 
 - Module 目錄依引擎分為 `04_Modules/Cocos/` 與 `04_Modules/Unity/`。
 - Cocos 與 Unity Module 不可混放；共用內容放到適合的知識域。
-- Project 放在 `02_Projects/`，目錄名稱必須清楚標示專案與必要識別資訊。
+- Project 放在 `02_Projects/`，目錄名稱必須清楚標示專案與引擎，例如 `PR-M01P-G001-Unity`；多引擎專案要在名稱與內容中明確標示支援的引擎。
 - Project 文件 YAML 必須有 `engine: cocos-creator`、`engine: unity` 或其他受控引擎值。
 - 若 Project 同時支援多個引擎，以 Metadata 陣列記錄，並在內容中清楚分段。
 
 ## 7. Raw 格式
 
-Raw 採外層分類、團隊／專案與年月路徑：
+Raw 必須使用與正式知識完全相同的外層分類，讓上傳者在來源階段就能放到正確知識域。04 Modules 再依引擎分流：
 
 ```text
-wiki/raw/<domain>/<team-or-project>/YYYY/MM/<raw-file>.md
+wiki/raw/
+├── 00_Governance/
+├── 01_Architecture/
+├── 02_Projects/
+├── 03_Game-Library/
+├── 04_Modules/
+│   ├── Cocos/
+│   └── Unity/
+├── 05_Compliance/
+├── 06_Markets/
+├── 07_Engineering/
+├── 08_Tools/
+├── 09_AI-Knowledge/
+├── 10_Operations/
+└── 99_Archive/
+```
+
+Raw 檔案再依團隊／專案與年月歸檔：
+
+```text
+wiki/raw/<same-domain>/<team-or-project>/YYYY/MM/<raw-file>.md
+```
+
+例如：
+
+```text
+wiki/raw/04_Modules/Cocos/awp-core/2026/08/meeting-2026-08-24.md
+wiki/raw/02_Projects/PR-M01P-G001-Unity/2026/08/build-note.md
 ```
 
 每個 Raw 檔案必須以簡易 YAML 標頭開始：

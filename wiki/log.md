@@ -12,3 +12,8 @@
 
 - 依 LLM Wiki Architecture Blueprint 對齊為 `00_Governance` 至 `10_Operations`，另設 `99_Archive`。
 - 移除 `wiki/curated/` 與 `wiki/outline/` 平行層；AI 整理內容直接進對應正式知識域，Outline 網站作為發布鏡像。
+
+## 2026-08-24（Raw 分類對齊）
+
+- 移除無用途的舊平行目錄：`conventions`、`decisions`、`flow`、`modules`、`projects`、`regions`。
+- `wiki/raw/` 建立與正式 Wiki 相同的 `00–10`、`99_Archive` 分類；`04_Modules` 再分 `Cocos` 與 `Unity`。
