@@ -1,367 +1,164 @@
 # AWP Wiki 規範
 
-> **狀態：草案，待團隊確認**
-> 本文件是 wiki 結構與規範的**權威定義**。其他檔案（`README.md`、`AGENTS.md`）
-> 只能引用本文件，不得複製內容。
+> 狀態：新版基線
+> 本文件是 AWP Wiki 現行規則的唯一權威來源。`AGENTS.md`、`CLAUDE.md` 與其他入口只引用本文件，不複製另一套規則。
 
-| 想知道 | 看 |
-|---|---|
-| 這個 wiki 涵蓋什麼 | §1 |
-| 目錄結構 | §2 |
-| 新的一頁該放哪 | §3 |
-| 一頁長什麼樣、每個欄位是什麼 | §4 |
-| 內容怎麼寫、出處怎麼附 | §5 |
-| 有哪些規則 | §6 |
-| 平常怎麼操作這個 wiki | §7 |
+## 1. 目的與內容邊界
 
----
+AWP Wiki 用來保存程式碼不會直接說清楚、但團隊需要重複理解的知識：架構、流程、模組契約、設計決策、操作限制、踩雷紀錄與產品案例。
 
-## 1. 這個 wiki 是什麼
+- 精確 API 簽章、enum、常數與實作細節以 source code 為準，不在 Wiki 維護容易過期的副本。
+- Wiki 頁面必須能回到來源或 Raw 紀錄查證。
+- 本地 Markdown 是正本；Outline 或其他瀏覽介面是發布鏡像。
+- 不確定內容標記 `⚠️ 待確認`，不得把推測寫成確定事實。
 
-**wiki 寫的是「code 沒說的東西」。**
+## 2. 三層知識管線
 
-code 說得清楚的，wiki 一律不寫 —— 寫了只是多一份會過期的副本。
-code 說不清楚的，才是 wiki 存在的理由。
-
-| | code 說得清楚 | code 說不清楚 |
-|---|---|---|
-| 例子 | 函式叫什麼、有幾個參數、enum 有哪些值、常數是多少 | 要照什麼順序呼叫、順序錯了會怎樣、當初為什麼這樣設計、這裡踩過什麼雷 |
-| 怎麼知道 | **打開 header 就看到** | **讀 code 讀不出來**，要讀完好幾個模組再自己拼 |
-| wiki | **不寫**，要查就 grep | **寫**，不然每個人都要重新推導一次 |
-
-### 具體是哪四種
-
-| 目錄 | 寫什麼 | 一句話 |
-|---|---|---|
-| `flow/` | **流程** | 要照什麼順序做 |
-| `modules/` | **契約** | 這個模組保證什麼、什麼情況會失敗 |
-| `conventions/` | **規範** | 該怎麼寫 |
-| `decisions/` | **決策** | 為什麼當初這樣定 |
-
-**一個真實例子說明差別**：
-
-`game_end` 有幾個參數 —— 打開 header 就看到，**wiki 不寫**。
-
-但「呼叫 `game_end` 之前必須先呼叫 `game_win_determined`，否則斷電時贏分會遺失」——
-code 裡沒有任何一行寫著這件事，得讀完好幾個模組再看 FRAM 的寫入時機才拼得出來。
-**這種才寫進 wiki。**
-
-### 事實基準
-
-`../AWP_Backend/AWP_BACKEND_SYSTEM/`。wiki 上的每一句話都要能回到那份 source code 驗證。
-
-### 分兩區，責任不同
-
-| | 維護區 | 素材區 `raw/` |
-|---|---|---|
-| **誰寫的** | 我們自己寫的 | 別人寫的，或我們已被取代的舊版 |
-| **放什麼** | 模組行為、串接流程、code 規範、架構決策 | 法規原文、協定通識、遊戲端的事 |
-| **程式改了怎麼辦** | **這頁也要跟著改**，不改它就過期了 | 不用管，內容本來就跟程式無關 |
-| **內容寫錯了算什麼** | **算 bug，要修** | 不算。我們沒有驗證過，也不保證它對 |
-| **會出現在導覽嗎** | 會 | 不會，也不列入孤島統計 |
-| **會推到 Outline 嗎** | 會 | 不會（本來就是從那匯出來的）|
-
-舉例說明差別：
-
-| 這一頁 | 屬於 | 為什麼 |
-|---|---|---|
-| `modules/recovery.md` 寫「存檔失敗會回傳錯誤碼」 | 維護區 | 如果程式改成用別種方式回報，這頁就得跟著改。沒改 = 寫錯了 = 要修 |
-| `raw/` 放的 SAS 協定第 8 章說明 | 素材區 | 我們的程式怎麼改都跟它無關。它寫得對不對也不是我們負責 |
-
-**判準只有一句：AWP 的 code 改了，這頁要不要跟著改？**
-
-「不維護」不等於「不存在」—— 素材還在 repo 裡查得到，只是**它不能當作現況依據**。
-要確認現況請看維護區的對應頁，或直接查 code。
-
-### 不寫的東西去哪查
-
-| 要查 | 去哪 |
-|---|---|
-| 函式精確簽章 | header |
-| enum、常數、錯誤碼 | grep code |
-| API 增減了什麼 | `scripts/api-diff.js` |
-| 法規原文 | 另有專門的法規知識庫 |
-
-本地 markdown 是正本，Outline 只是給人瀏覽的鏡像，不一致以本地為準。
-
----
-
-## 2. 目錄結構
-
-```
-awp-wiki-repo/
-│
-├── WIKI-SPEC.md                  本文件 — 結構與規範的權威定義
-├── AGENTS.md                     所有 AI 的共同入口
-├── CLAUDE.md                     @AGENTS.md ＋ Claude 專屬
-├── README.md                     人類入口
-├── .kiro/steering/project.md     Kiro 入口
-│
-├── wiki/
-│   ├── index.md                  唯一導覽入口（30 秒重點 ＋ 任務反查表）
-│   ├── glossary.md               術語表
-│   ├── log.md                    記 wiki 自己的變化（append-only）
-│   │
-│   ├── modules/                  有什麼功能（一模組一頁）
-│   ├── flow/                     怎麼用（跨模組流程）
-│   ├── conventions/              寫 code 的規範
-│   ├── decisions/                為什麼這樣設計
-│   ├── regions/                  跨專案的地區對照表
-│   ├── projects/<專案>/          各專案特有（setup.md ＋ issues.md）
-│   └── raw/                      原始素材，唯讀，不進 index
-│
-└── scripts/
-    ├── check-wikilinks.js        掃連結是否解得開
-    ├── check-orphans.js          找沒人連得到的頁（排除 raw/ 與 _example*）
-    ├── api-diff.js               比對兩版 header 的 API 增減
-    └── sync-to-outline.js        推送到 Outline（raw/ 不推）
+```text
+團隊成員上傳 Raw
+        ↓
+YAML 與格式檢查
+        ↓
+Wiki Agent 產生 Curated
+        ↓
+Wiki Agent 更新 Outline
+        ↓
+產生變更摘要、Git commit 與 Pull Request
 ```
 
-### 各目錄放什麼
+| 層級 | 位置 | 目的 | 編輯權限 |
+| --- | --- | --- | --- |
+| Raw | `wiki/raw/` | 保存原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正 |
+| Curated | `wiki/curated/` | AI 依 Raw 整理出的可搜尋中間層 | Wiki Agent 產生；人工不可直接修改 |
+| Outline | `wiki/outline/` | 對外目錄、摘要與導覽 | Wiki Agent 產生；人工不可直接修改 |
+| Maintained | `wiki/` 其他正式領域目錄 | 經審查、可被團隊引用的知識 | 依 PR 與 Owner 審查流程修改 |
 
-| 目錄 | 放 | 不放 |
-|---|---|---|
-| `modules/` | 一模組一頁：對外 API 行為、狀態、已知問題 | 跨模組流程、精確簽章 |
-| `flow/` | 一件事從頭做到尾，跨模組 | 單一模組的內部細節 |
-| `conventions/` | 命名、code style、目錄規範 | 為什麼選這規範（→ `decisions/`）|
-| `decisions/` | 選了什麼、拒絕了什麼、為什麼 | 怎麼做（→ `flow/`）|
-| `regions/` | 跨專案通用的地區差異對照表 | 單一專案的地區設定值（→ `projects/`）|
-| `projects/` | 該專案的設定、bet 表、專屬的雷 | 換個專案還成立的知識（→ 共用區）|
-| `raw/` | 外部規格書、協定通識、會議紀錄、匯入文件、我們的舊版 | 任何我們要維護的內容 |
+Curated 或 Outline 發現錯誤時，回到 Raw 補充或修正來源，再重新執行 Wiki Agent；不得直接手改 AI 產物。
 
-### 三條結構規則
+## 3. 目錄與 11 個知識領域
 
-**① 頁面清單只存在 `wiki/index.md` 一處。**
-子目錄可以有 `README.md`，但只寫「放什麼、不放什麼、命名怎麼取」——那是規則不會過期；
-**不得列出本目錄有哪些頁**——那是清單會過期。
-`raw/README.md` 是唯一兼作入口的例外，因為 `raw/` 不進 index。
+正式知識分類採用以下 11 個領域。新內容只能選一個主要領域，跨領域內容以連結或標籤補足，不複製成多份。
 
-**② 地區是表格欄位，不是資料夾。**
-不要開 `projects/<專案>/<地區>/` —— 那會變笛卡爾積，新增一個地區要開 N 個資料夾，
-每個 90% 內容相同。地區差異多半只是同一件事的不同值，寫成一列一地區的表格，
-新增地區就是**加一列**。
+| 編號 | 領域 | 建議內容 |
+| --- | --- | --- |
+| 01 | Foundations | 基礎概念、術語、背景與學習路徑 |
+| 02 | Models | 模型家族、能力、限制、版本與選型 |
+| 03 | Data & Knowledge | 資料、知識庫、切分、metadata 與來源 |
+| 04 | Prompting | Prompt 設計、上下文、結構化輸出與防注入 |
+| 05 | Retrieval & RAG | Embedding、檢索、重排、引用與更新 |
+| 06 | Agents & Tools | Agent、工具呼叫、工作流與權限邊界 |
+| 07 | Application Engineering | SDK、服務整合、快取、串流與錯誤處理 |
+| 08 | Evaluation | 品質、成本、延遲、安全、回歸與上線門檻 |
+| 09 | Safety & Governance | 安全、隱私、法規、審查與風險管理 |
+| 10 | Operations | 監控、事件、版本、Fallback、成本與退場 |
+| 11 | Products & Case Studies | 產品案例、使用模式、決策與經驗回饋 |
 
-**③ 底線開頭的是範本，不是內容。**
-`_example-module.md`、`_example-project/` 供複製修改用，不列進 index，
-檢查孤島時比照 `raw/` 排除。
+建議目錄：
 
-### 根層只有三頁
-
-`index.md`（唯一導覽入口）、`glossary.md`（術語表）、`log.md`（記 wiki 自己的變化）。
-
-> **沒有 `intro.md`、`quick-reference.md`、`changelog.md`。**
-> 前兩者的內容各有更好的歸屬；enum／常數／錯誤碼會過期又能直接 grep，違反規則 5。
-
----
-
-## 3. 新增一頁時，該放哪
-
-依序問：
-
-1. **AWP code 改了，這頁要不要跟著改？** 不用 → `raw/`
-2. **換一個專案還成立嗎？** 不成立 → `projects/<專案>/`
-3. **是跨專案的地區規則嗎？** 是 → `regions/`
-4. **剩下的看它在講什麼**：單一模組 → `modules/`；跨模組流程 → `flow/`；
-   該怎麼寫 → `conventions/`；為什麼這樣設計 → `decisions/`
-
-判不出來 → 先放 `raw/`。寧可少維護一頁，不要多一頁沒人管的。
-
----
-
-## 4. 每頁最上面的標籤
-
-每個檔案開頭要有一段用 `---` 包起來的標籤區（YAML frontmatter）。
-**那是給機器讀的** —— 檢查腳本、同步腳本、AI 都靠它判斷這頁是什麼。
-
-一頁完整長這樣：
-
-```markdown
----
-type: module
-tier: maintained
-status: stable
-tags: [core, recovery]
-sources: [src/interface/awp_bs_irecovery.h, src/implementations/recovery/]
-source_commit: a1b2c3d
-owner: 王小明
-updated: 2026-08-19
----
-# Recovery — 斷電還原
-
-> **答**：三類資料怎麼讀寫？commit 流程？檔名規則？
-> **Source**：`src/implementations/recovery/`
-> **讀完接著**：[[flow/game-call-sequence]] / [[modules/system-state]]
-> **約束**：存檔編號從頭到尾必須一致
-
-> 本頁行號以 commit `a1b2c3d` 為準。行號會漂，對不上時改搜函式名。
-
----
-
-（正文從這裡開始）
+```text
+wiki/
+├── index.md                 # 正式導覽入口
+├── raw/                     # Raw：團隊可上傳，禁止當成現況依據
+├── curated/                 # AI 產物：鎖定
+├── outline/                 # AI 產物：鎖定
+├── foundations/
+├── models/
+├── data-knowledge/
+├── prompting/
+├── retrieval-rag/
+├── agents-tools/
+├── application-engineering/
+├── evaluation/
+├── safety-governance/
+├── operations/
+├── products-case-studies/
+├── modules/                 # 依引擎分流
+│   ├── cocos/
+│   └── unity/
+├── projects/                # 每個 Project 必須明示引擎
+├── decisions/
+├── glossary.md
+└── log.md                   # append-only
 ```
 
-一頁分四塊：**標籤區**（機器讀）→ **標題** → **四行導引**（AI 判斷要不要讀）→ **正文**。
+既有內容可在遷移完成前留在原目錄；新增或改寫內容依新版 11 領域與三層管線規則處理。
 
-### 維護區的標籤
+## 4. Module 與 Project 規則
 
-| 欄位 | 填什麼 | 為什麼要它 |
-|---|---|---|
-| `type` | `module`／`flow`／`convention`／`decision`／`project` | 決定該用哪套寫法 |
-| `tier` | 固定 `maintained` | 標明「這頁我們負責，寫錯算 bug」，檢查腳本靠它區分 |
-| `status` | `draft`／`stable`／`deprecated` | 被新頁取代但還留著追溯的用 `deprecated` |
-| `tags` | 主題關鍵字 | 給搜尋用 |
-| `sources` | 事實出自哪些檔案或目錄 | **改 code 後用它反查「哪些頁要跟著改」** |
-| `source_commit` | 七碼 commit hash | 行號的取證基準。沒有它，行號漂掉時沒有訊號 |
-| `owner` | 負責人 | 過期時找誰。**沒有 owner 的頁等於沒人維護** |
-| `updated` | `YYYY-MM-DD` | 最後修改日 |
+- `Module` 固定依引擎分為 `modules/cocos/` 與 `modules/unity/`。
+- Cocos 與 Unity 的內容不可混放；共同內容放在適合的知識領域。
+- `Project` 目錄名稱必須寫明引擎，例如 `project-alpha-cocos/`、`project-alpha-unity/`。
+- Project 文件的 YAML 標頭也必須有 `engine: cocos` 或 `engine: unity`。
+- 若同一 Project 同時支援兩個引擎，仍須分別建立引擎目錄，並用連結共用共同規則。
 
-### 素材區的標籤
+## 5. Raw 格式
 
-`raw/` 底下用另一套：`type: raw`／`tier: raw`／`status: imported`／`source_url`／`imported_at`。
+Raw 的路徑採「外層分類＋團隊或專案＋年月」：
 
-**沒有 `owner`、沒有 `source_commit`** —— 因為我們不維護它，也不保證它跟 code 對得上。
-
-標題後面必須有這段警告，匯入腳本自動加：
-
-```markdown
-> ⚠️ 原始素材，唯讀。不隨 code 更新、不保證正確。
-> 需要現況請看 [[modules/xxx]]，需要原文請回查來源。
+```text
+wiki/raw/<domain>/<team-or-project>/YYYY/MM/<raw-file>.md
 ```
 
----
+每個 Raw 檔案開頭必須有簡易 YAML 標頭：
 
-## 5. 頁面內容怎麼寫
-
-### 5.1 標題後面那四行
-
-| 這行 | 回答什麼 |
-|---|---|
-| **答** | 這頁能回答哪些問題 |
-| **Source** | 內容從哪個檔案來 |
-| **讀完接著** | 相關的下一頁 |
-| **約束** | 有什麼絕對不能踩的 |
-
-**為什麼要**：AI 掃過就知道這頁跟它要問的事有沒有關係，有關才展開全文。
-**判斷成本從幾百行變成四行。這是本 wiki 最核心的設計，不得省略。**
-
-例外：`index.md` 與 `log.md` 因性質特殊不套用 —— 前者本身就是導覽，後者是純記錄。
-
-接著加一行取證基準：`> 本頁行號以 commit xxxxxxx 為準，對不上時改搜函式名。`
-（跟標籤區的 `source_commit` 同一件事，寫兩次是因為標籤給機器讀、這行給人讀。）
-
-### 5.2 每條約束後面要附出處
-
-頁層級的 `sources` 只說「這頁參考了哪些檔案」，不夠。
-每一條約束、每一個行為描述，要寫清楚出自哪個函式：
-
-```markdown
-| # | 約束 | Source |
-|---|---|---|
-| 1 | 初始化失敗後其餘 API 全不可用 | `example.cpp` → `init()` |
-| 2 | 金額對不上不會擋，只印警告 | `game_play.cpp` → `check_win_total()` |
+```yaml
+title: "文件標題"
+domain: "application-engineering"
+engine: "cocos" # cocos | unity | both | n/a
+source_type: "meeting" # meeting | note | ticket | document | chat
+owner: "@name"
+captured_at: "2026-08-24"
+status: "raw"
 ```
 
-**附函式名，不附行號** —— 行號會漂，函式名相對穩定。
+YAML 後接原始內容。Raw 階段不要刪除脈絡、過度潤飾或自行推導結論。
 
-**為什麼要**：不是要人相信 wiki，是**要能查證**。而且寫的人為了寫出這一行，
-本來就得先去翻 code —— 錯誤在寫的當下就被抓到，不會等別人照著做出事才發現。
+## 6. 頁面 Metadata
 
-### 5.3 寫作風格
+正式維護頁面至少要有：
 
-- **繁體中文為主**，技術名詞（class／function／API 名）保留英文原文
-- **程式碼片段優先於抽象描述**，且要附路徑
-- 內部連結用 `[[wikilink]]`，不要寫 Outline 網址
-- 不確定的事情標 `⚠️ 待確認` 或 `TODO`，**絕不編造**
+```yaml
+type: module | flow | convention | decision | project | guide
+domain: foundations | models | data-knowledge | prompting | retrieval-rag | agents-tools | application-engineering | evaluation | safety-governance | operations | products-case-studies
+status: draft | review | stable | deprecated
+owner: "@name"
+updated: YYYY-MM-DD
+sources: []
+```
 
----
+Curated 與 Outline 由 Agent 產生時，必須保留來源頁面與產生時間；Raw 使用第 5 節的專用標頭。
 
-## 6. 規則
+## 7. Wiki Agent 規範
 
-五條，每條都對應一次實際事故。**訂規則的判準是「不訂會發生什麼具體的事」** ——
-答不出來的就不訂，否則整份規範會被當成參考而已。
+Wiki Agent 每週至少執行一次，重大事件、架構決策或 Raw 大量新增後可手動觸發。
 
-| # | 規則 | 不訂會發生什麼 |
-|---|---|---|
-| 1 | **基準 repo 寫死在規範裡**。所有 `sources` 指向 `../AWP_Backend/AWP_BACKEND_SYSTEM/` | 機器上有多份長得很像的 checkout，wiki 對著舊的那份寫了三個月，漏 40 個 API、`game_end` 簽章從 12 參數變 13 沒人知道 |
-| 2 | **`raw/` 唯讀，不進 index**。檢查孤島時排除 | 117／194 頁被判定為孤島，其中約 100 頁是素材被誤當成該維護的知識 |
-| 3 | **事實以模組頁為準，摘要頁只能引用**。`index.md` 不得自述約束 | 一個不存在的 API 在模組頁已改對，但最常被讀的三頁還是錯的，同一份檔案裡甚至前後矛盾 |
-| 4 | **檢查腳本必須 exit code 非 0**。只印訊息不算擋 | 同步腳本對 40 頁印 `SKIP` 後照樣印 `Done`、exit 0，整棵目錄從沒推上 Outline |
-| 5 | **不保存「會過期、又無法自動驗證」的資訊** | 手寫的 API 變更記錄停在三個月前，其後 40 個新 API 一筆沒記，沒有人發現 |
+執行順序：
 
-**規則 5 是判斷「該不該寫進 wiki」的通則：**
+1. 讀取上次 checkpoint 後新增或修改的 Raw。
+2. 驗證 YAML、領域、引擎欄位與敏感資料。
+3. 只根據 Raw 產生或更新 Curated，保留來源連結。
+4. 依 Curated 更新 Outline，不捏造未存在的目錄或結論。
+5. 產生變更摘要與受影響頁面清單。
+6. 執行 Markdown、連結、孤島與敏感資料檢查。
+7. 建立短生命週期分支、commit 與 Pull Request。
 
-| 資訊 | 會過期 | 能自動驗 | 處理 |
-|---|---|---|---|
-| API 變更歷程、精確簽章、enum／常數 | 是 | 是 | **不寫**，用腳本或 grep |
-| 「這是 code 保證還是推論」的標記 | 是 | 否 | **不寫**，改附出處讓人核對 |
-| 行號 | 是 | 是 | 可寫，但**必須 pin commit** |
-| 設計意圖、為什麼這樣做、踩過的雷 | **否** | 不用 | **這是 wiki 的本體** |
+Wiki Agent 不得 force push、刪除 Git 歷史、修改 Raw 來源或未經審查直接合併 `main`。
 
----
+## 8. Git 與審查
 
-## 7. 平常對這個 wiki 會做的四件事
+- `main`：穩定、可發布的正本。
+- `docs/<topic>-<short-name>`：一般文件變更。
+- `adr/<number>-<short-name>`：重大決策。
+- Commit 使用 Conventional Commits，例如 `docs: update recovery guide`。
+- 一個 commit 聚焦一個意圖；破壞性結構調整拆成遷移與清理兩個 PR。
+- 一般文件至少一位領域 Maintainer 審查。
+- 架構、資安、資料治理或跨團隊規範需兩位 Maintainer。
+- commit 與 push 由使用者決定，Agent 不主動執行。
 
-每個操作都有觸發條件與固定步驟。**照步驟走，不要自己發明流程** ——
-多人用各自的 AI 動同一個 wiki，沒有共同步驟就會產生多種寫法與多種品質。
+## 9. 維護週期
 
-### 操作一 — 查詢
-
-**觸發**：任何人問「AWP 的 X 是怎麼運作的」
-
-1. 先讀 `wiki/index.md` 定位，**不要全量載入 wiki**
-2. 依判斷讀 1–5 頁，不要更多
-3. 回答時附 `[[頁面名]]` 當引用來源
-4. 涉及具體行為、簽章、數值 → **回基準 repo 查證再答**
-5. 回答本身有重用價值 → 主動問「要不要存成新頁？」
-
-**紅線**：wiki 說的不等於驗證通過，wiki 可能落後於 code。
-
-### 操作二 — 匯入素材
-
-**觸發**：有一批既有文件、規格書、會議紀錄要進來
-
-1. 讀來源檔案
-2. **先停下來對齊，不要直接動手**。講清楚：這批在講什麼、3–5 個重點、
-   打算改哪些頁、依 §3 屬於哪一區
-3. **等確認後才執行**
-4. 放進 `raw/` 對應子目錄，每頁加素材警告（§4）
-5. 更新 `raw/README.md`，`wiki/log.md` append 一筆
-
-**為什麼要先對齊**：117 個孤島就是某次匯入沒經過這關，一次倒了 125 頁進來造成的。
-**省下的是當下十分鐘，代價是往後每個人都找不到東西。**
-
-### 操作三 — 跟 code 同步
-
-**觸發**：改完 code，或定期稽核
-
-1. 用各頁的 `sources` 欄位**反查**哪些頁受影響
-2. **回基準 repo 查證**，不能只看 wiki 原本怎麼寫就照抄
-3. 更新內容 ＋ `updated` ＋ `source_commit`
-4. 動到對外 API → 跑 `api-diff.js` 確認增減
-5. 新增或修改的約束**附出處**（§5.2）
-6. 跑 `check-wikilinks.js` 與 `check-orphans.js`
-7. `wiki/log.md` append 一筆，寫明對照的 commit
-
-新增頁面時另外確認：用 §3 判定目錄、標籤區齊全（含 `source_commit` 與 `owner`）、
-四行導引寫好、加進 `index.md`。
-
-### 操作四 — 健檢
-
-**觸發**：「lint wiki」，或每兩週一次的定期稽核
-
-拿一段 commit range（上次稽核到現在）掃 code 變更，回頭檢查 wiki 該不該改。產出七項報告：
-
-| # | 檢查 | 怎麼查 |
-|---|---|---|
-| 1 | **基準漂移** | `sources` 指的還是基準 repo 嗎？行號對得上 `source_commit` 嗎？|
-| 2 | **API 增減** | `api-diff.js` 比對兩版 header，新增的有沒有寫進 wiki |
-| 3 | **矛盾** | 不同頁對同一件事說法衝突 |
-| 4 | **過時** | code 已改但對應頁沒動（`git log` 對照 `sources` 路徑）|
-| 5 | **孤島** | 沒有任何頁連進來（排除 `raw/` 與 `_example*`）|
-| 6 | **缺口** | `index.md` 或 `log.md` 提到但沒有對應頁的概念 |
-| 7 | **結構建議** | 可以拆分或合併的頁、該補哪些頁 |
-
-完成後 `log.md` append 一筆，寫明掃的 commit range 與發現數量。
-
-**判斷這個健檢有沒有失效**：問一句「**最近一次有人因為這份報告改變了原本要做的事，
-是什麼時候？**」答不出來，就算腳本每次跑成功、報告每次印出來，它實際上已經沒有作用了。
+- Raw：團隊成員有新資料即可提交。
+- Curated／Outline：Wiki Agent 每週至少更新一次。
+- 有效文件超過 90 天未檢視，列入維護清單。
+- 失效文件標記 `deprecated`，除非確認無追溯價值，不直接刪除。
+- `wiki/log.md` 只能 append，記錄規則與知識管線的重要變更。

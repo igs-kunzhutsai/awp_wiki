@@ -1,33 +1,37 @@
-# AWP Wiki
+# AWP Backend Wiki
 
-給 AI agent 使用的 AWP Backend 知識庫。
+AWP 團隊知識庫，供團隊成員與 AI Agent 查詢、整理與維護。
 
-**所有結構與規範都在 [`WIKI-SPEC.md`](WIKI-SPEC.md)，本檔不重複。**
+## 現行入口
 
-| 你想知道 | 看 |
-|---|---|
-| 這個 wiki 涵蓋什麼、不涵蓋什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §1 |
-| 目錄結構、各目錄放什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §2 |
-| 新的一頁該放哪 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §3 |
-| 一頁長什麼樣、每個欄位是什麼 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §4 |
-| 內容怎麼寫、出處怎麼附 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §5 |
-| 有哪些規則 | [`WIKI-SPEC.md`](WIKI-SPEC.md) §6 |
-| 平常怎麼操作這個 wiki | [`WIKI-SPEC.md`](WIKI-SPEC.md) §7 |
-| AI 開工前該讀什麼 | [`AGENTS.md`](AGENTS.md) |
+- [Wiki 規範](WIKI-SPEC.md)
+- [AI Agent 指引](AGENTS.md)
+- [Wiki 導覽](wiki/index.md)
+- [11 個知識領域與資料管線](WIKI-SPEC.md#3-目錄與-11-個知識領域)
 
-## 給 AI 的入口
+## 新版知識管線
 
-一份正本、三個入口，**不要複製內容到其他檔案** —— 複本會漂移，而且漂移是靜默的。
+```text
+團隊成員上傳 Raw
+        ↓
+Wiki Agent 整理 Curated
+        ↓
+Wiki Agent 更新 Outline
+        ↓
+Git commit / Pull Request
+```
 
-| 工具 | 讀 |
-|---|---|
-| Codex | `AGENTS.md`（原生位置，零設定）|
-| Claude | `CLAUDE.md` → `@AGENTS.md` |
-| Kiro | `.kiro/steering/project.md` → 指向 `AGENTS.md` |
+- `wiki/raw/`：團隊成員可新增與修正的原始資料。
+- `wiki/curated/`：AI 整理後的中間層，人工不可直接修改。
+- `wiki/outline/`：AI 產生的目錄與導覽，人工不可直接修改。
+- 其餘正式知識頁依 [11 個知識領域](WIKI-SPEC.md#3-目錄與-11-個知識領域) 管理。
 
-## 目前狀態
+## AWP 特別規則
 
-本 repo 是**架構範本**：只有規範與目錄骨架，`wiki/` 的內容頁與 `scripts/` 的腳本實作尚未包含。
+- Module 依引擎分為 `Cocos` 與 `Unity`。
+- Project 目錄名稱與 YAML 標頭都必須標示所屬引擎。
+- Raw 必須使用外層分類與簡易 YAML 標頭。
+- Wiki Agent 每週至少執行一次整理與 Git PR 流程。
+- 本地 Markdown 是正本；Outline 是發布鏡像。
 
-`WIKI-SPEC.md` §8 列出尚未定案的事項，其中**各目錄的 owner 指派**最關鍵 ——
-規範預設「有人負責」，這題沒答案其他規則都是空的。
+既有 Wiki 內容會依遷移計畫逐步對應到新版分類；在遷移完成前，不刪除既有知識頁。

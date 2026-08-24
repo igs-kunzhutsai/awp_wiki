@@ -5,7 +5,7 @@
 以上 `AGENTS.md` 是所有 AI 的共同規範，Codex 與 Kiro 讀同一份。
 專案知識、工作流程、紅線全在那裡，**本檔不重複**。
 
-wiki 的結構規範在 [`WIKI-SPEC.md`](WIKI-SPEC.md)。
+Wiki 的結構與治理規範只以 [`WIKI-SPEC.md`](WIKI-SPEC.md) 為準。
 
 以下只有 Claude 需要：
 

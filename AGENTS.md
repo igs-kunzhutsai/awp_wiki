@@ -1,10 +1,8 @@
-# AWP Backend 專案指引
+# AWP Wiki Agent 指引
 
-> 所有 AI 的共同入口。Codex 讀本檔；Claude 透過 `CLAUDE.md` 的 `@AGENTS.md` 載入；
-> Kiro 透過 `.kiro/steering/project.md` 指過來。
+> 所有 AI 的共同入口。規範只以 `WIKI-SPEC.md` 為準；Claude 與 Kiro 也從本檔進入。
 
-AWP 是 IGS 機台後台 **C++ SDK**，對外是 C-style API（`awp_bs_<module>_<action>`）。
-本 repo 是它的知識庫，不是程式碼本身。
+本 repo 是 AWP 團隊知識庫，不是 source code repo。
 
 ---
 
@@ -12,14 +10,14 @@ AWP 是 IGS 機台後台 **C++ SDK**，對外是 C-style API（`awp_bs_<module>_
 
 | 檔案 | 給你什麼 |
 |---|---|
-| **`wiki/index.md`** | 30 秒重點 ＋ 任務反查表 —— 依任務決定要展開哪幾頁 |
-| **`WIKI-SPEC.md`** | wiki 的結構與規範。**要動 wiki 之前必讀 §7（四個操作）** |
+| **`WIKI-SPEC.md`** | 現行 Wiki 唯一規範 |
+| **`wiki/index.md`** | 目前導覽與任務入口 |
 
-**不要全量載入 wiki。** 從 `index.md` 的反查表定位，讀 1–5 頁就好。
+不要全量載入 wiki，依任務讀取必要頁面。
 
 ---
 
-## 🔴 事實基準
+## Source code 基準
 
 **source code 唯一基準：`../AWP_Backend/AWP_BACKEND_SYSTEM/`**
 
@@ -31,15 +29,27 @@ AWP 是 IGS 機台後台 **C++ SDK**，對外是 C-style API（`awp_bs_<module>_
 
 ---
 
-## 🔴 紅線
+## 知識管線
 
-- **不准改 `wiki/raw/`** —— 唯讀素材
-- **不准刪 `wiki/log.md` 既有條目** —— 只能 append
-- **不准在沒查 code 的情況下寫事實** —— 不確定就標 `⚠️ 待確認`，絕不編造
+```text
+團隊成員 → wiki/raw/ → Wiki Agent → wiki/curated/ → wiki/outline/ → Git PR
+```
+
+- 團隊成員可新增與修正 `wiki/raw/`。
+- `wiki/curated/` 與 `wiki/outline/` 是 AI 產物，人工不可直接修改。
+- 發現 AI 整理錯誤時，回 Raw 修正來源後重新產生。
+- Module 依 Cocos／Unity 分流；Project 目錄與 YAML 標頭都必須標示引擎。
+
+## 紅線
+
+- 不准把沒有來源的推測寫成事實；不確定就標 `⚠️ 待確認`
+- 不准直接修改 `wiki/curated/` 或 `wiki/outline/`
+- 不准提交密鑰、個資、客戶機密或未授權內容
+- 不准刪 `wiki/log.md` 既有條目，只能 append
 - **一次改動超過 15 個檔案要先停下討論**
 - **破壞性操作前先列清單確認**（刪檔、大量覆寫、結構重組、`git reset`、force push）
-- **commit 與 push 由使用者決定**，不主動執行
-- **token 不准寫進會被 git 追蹤的檔案** —— 走環境變數
+- commit、push、合併與 Outline 發布由使用者決定，不主動執行
+- token 不准寫進會被 git 追蹤的檔案，必須使用環境變數
 
 ---
 
