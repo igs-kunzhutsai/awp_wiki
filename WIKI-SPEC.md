@@ -8,7 +8,7 @@
 本 Wiki 的目標是讓知識「找得到、信得過、可追溯」。
 
 - 一份文件只有一個主要歸屬位置。
-- 目錄定義主要責任；跨市場、引擎、板底、來源與法規用 Metadata 關聯。
+- 目錄定義主要責任；跨市場、引擎、板底、來源與法規用 YAML 欄位關聯。
 - 本地 Markdown 是正本，Outline 網站是發布鏡像。
 - 正式知識寫架構、流程、契約、決策、限制與案例；精確 API 簽章、enum、常數與實作細節以 source code 為準。
 - 事實、目前實作、建議方案與待確認事項必須分開標示。
@@ -19,7 +19,7 @@
 ```text
 團隊成員上傳 Raw
         ↓
-YAML／Metadata 檢查
+YAML 欄位檢查
         ↓
 Wiki Agent 整理到對應正式目錄
         ↓
@@ -86,23 +86,23 @@ wiki/
 | 10 | Deployment and Maintenance | 發布、監控、事件、回滾、維運與生命週期管理 |
 | 99 | Archive | 停用、過期與歷史內容，預設不納入 LLM 檢索 |
 
-## 5. 分類與 Metadata
+## 5. 分類與 YAML 欄位
 
-專案、遊戲與模組使用實體目錄；其他維度使用受控 Metadata，不因每個市場或引擎複製一份文件。
+專案、遊戲與模組使用實體目錄；其他維度使用受控 YAML 欄位，不因每個市場或引擎複製一份文件。
 
 | 維度 | 方式 | 範例 |
 | --- | --- | --- |
 | 專案、遊戲、模組 | 實體目錄 | `02_Projects/PR-M01P-G001` |
-| 市場 | 目錄＋ Metadata | `markets: [US, PR]` |
-| 遊戲引擎 | Metadata | `engine: cocos-creator` |
-| 板底 | Metadata | `board: [M01P]` |
-| 來源 | Metadata | `source: original` |
-| 畫面配置 | Metadata | `screens: 2 · landscape` |
-| 風格 | Metadata | `style: [latin]` |
-| 法規 | Metadata＋關聯文件 | `compliance: [SAS, GLI-11]` |
+| 市場 | 目錄＋YAML 欄位 | `markets: [US, PR]` |
+| 遊戲引擎 | YAML 欄位 | `engine: cocos-creator` |
+| 板底 | YAML 欄位 | `board: [M01P]` |
+| 來源 | YAML 欄位 | `source: original` |
+| 畫面配置 | YAML 欄位 | `screens: 2 · landscape` |
+| 風格 | YAML 欄位 | `style: [latin]` |
+| 法規 | YAML 欄位＋關聯文件 | `compliance: [SAS, GLI-11]` |
 | 機率 | 受控模型編號 | `math_model_id: MATH-G001-V3` |
 
-Metadata 必須使用受控詞彙，不同文件不可混用 `Cocos`、`CocosCreator`、`cocos_creator` 等近義值。
+YAML 欄位值必須使用受控詞彙，不同文件不可混用 `Cocos`、`CocosCreator`、`cocos_creator` 等近義值。
 
 ## 6. Module 與 Project 規則
 
@@ -110,7 +110,7 @@ Metadata 必須使用受控詞彙，不同文件不可混用 `Cocos`、`CocosCre
 - Cocos 與 Unity Module 不可混放；共用內容放到適合的知識域。
 - Project 放在 `02_Projects/`，目錄名稱必須清楚標示專案與引擎，例如 `PR-M01P-G001-Unity`；多引擎專案要在名稱與內容中明確標示支援的引擎。
 - Project 文件 YAML 必須有 `engine: cocos-creator`、`engine: unity` 或其他受控引擎值。
-- 若 Project 同時支援多個引擎，以 Metadata 陣列記錄，並在內容中清楚分段。
+- 若 Project 同時支援多個引擎，以 YAML 陣列欄位記錄，並在內容中清楚分段。
 
 ## 7. Raw 格式
 
@@ -210,7 +210,7 @@ CHANGELOG.md
 
 `README.md` 必須回答：專案是什麼、解決什麼問題、負責團隊、引擎／板底／市場、如何取得與編譯、依賴哪些遊戲與模組、CI/CD 與發布位置、已知限制與風險。
 
-## 9. 文件 Metadata 與生命週期
+## 9. 文件 YAML 欄位與生命週期
 
 正式頁面至少包含：
 
@@ -225,9 +225,9 @@ board: []
 compliance: []
 ```
 
-### 正式頁面 Metadata 欄位定義
+### 正式頁面 YAML 欄位定義
 
-正式頁面的 Metadata 用來讓 Agent 篩選、搜尋與判斷文件是否仍然有效：
+正式頁面的 YAML 欄位用來讓 Agent 篩選、搜尋與判斷文件是否仍然有效：
 
 | 欄位 | 填寫方式 | 範例 |
 | --- | --- | --- |
@@ -255,10 +255,10 @@ draft → reviewing → approved → deprecated → archived
 Wiki Agent 每週至少執行一次；Raw 大量新增、重大決策或架構變更後可手動觸發。
 
 1. 讀取新增或修改的 Raw。
-2. 驗證 YAML、Metadata、來源與敏感資料。
+2. 驗證 YAML 欄位、來源與敏感資料。
 3. 整理到對應正式目錄，不建立 `curated/` 平行層。
 4. 產生變更摘要、來源清單與受影響頁面。
-5. 執行 Markdown、wikilink、孤島、Metadata 與 secrets 檢查。
+5. 執行 Markdown、wikilink、孤島、YAML 欄位與 secrets 檢查。
 6. 建立短生命週期分支與 Pull Request。
 7. 審查通過後同步到 Outline。
 

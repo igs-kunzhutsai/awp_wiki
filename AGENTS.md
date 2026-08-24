@@ -30,12 +30,12 @@
 - 團隊成員可新增與修正 `wiki/raw/`。
 - AI 整理後直接寫入 `00_Rules-and-Decisions` 至 `10_Deployment-and-Maintenance` 的對應目錄。
 - 不建立 `wiki/curated/` 或 `wiki/outline/` 平行層。
-- Module 依 Cocos／Unity 分流；Project 目錄與 Metadata 都必須標示引擎。
+- Module 依 Cocos／Unity 分流；Project 目錄與 YAML 欄位都必須標示引擎。
 
 ## 紅線
 
 - 不准把沒有來源的推測寫成事實；不確定就標 `⚠️ 待確認`。
-- 不准把不同市場、引擎或板底的同一知識複製成多份；使用 Metadata 關聯。
+- 不准把不同市場、引擎或板底的同一知識複製成多份；使用 YAML 欄位關聯。
 - 不准提交密鑰、個資、客戶機密或未授權內容。
 - 不准刪 `wiki/log.md` 既有條目，只能 append。
 - `99_Archive` 預設不納入 LLM 檢索。
