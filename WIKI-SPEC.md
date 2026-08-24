@@ -31,7 +31,7 @@ Wiki Agent 整理到對應正式目錄
 | 層級 | 位置 | 用途 | 編輯原則 |
 | --- | --- | --- | --- |
 | Raw | `wiki/raw/` | 原始紀錄、外部規格、會議與匯入素材 | 團隊成員可新增／修正；不作為現況依據 |
-| 正式知識 | `wiki/00_Rules-and-Decisions/` 至 `wiki/10_Deployment-and-Maintenance/` | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
+| 正式知識 | `wiki/` 下的正式知識域 | AI 整理後的可重用知識 | 人工不可直接改壞；透過 Raw、Agent 與 PR 更新 |
 | Archive | `wiki/99_Archive/` | 停用、過期與歷史內容 | 預設不納入 LLM 檢索 |
 | Outline | Outline 網站 | 給人類瀏覽的發布鏡像 | 不作為本地正本 |
 
@@ -39,12 +39,12 @@ Wiki Agent 整理到對應正式目錄
 
 ## 3. 目錄架構
 
-正式目錄與參考架構頁一致：
+正式目錄以參考架構為基礎，並將 Architecture 與 Software Development 合併：
 
 ```text
 wiki/
 ├── 00_Rules-and-Decisions/  # 規範與決策
-├── 01_Architecture/         # 共用技術架構
+├── 01_Architecture-and-Development/ # 共用技術架構與軟體開發
 ├── 02_Projects/             # 實際交付專案
 ├── 03_Game-Library/         # 可移植遊戲庫
 ├── 04_Modules/              # 可重用模組
@@ -56,10 +56,9 @@ wiki/
 │   └── Platform/            # OTA／TPM／USB 更新等
 ├── 05_Compliance/           # 法規與專業分析
 ├── 06_Markets/              # 市場差異資訊
-├── 07_Software-Development/ # 程式開發與測試
 ├── 08_Tools/                # 工具與評估
 ├── 09_AI-and-Wiki-Agents/    # AI 與 Wiki Agent
-├── 10_Deployment-and-Maintenance/ # 上線與維運
+├── 10_Incident-and-Problem-Records/ # 問題與事件紀錄
 ├── 99_Archive/              # 停用、過期與歷史內容
 ├── raw/                     # Raw 原始資料，與正式知識域一一對應
 ├── index.md                 # 唯一主要導覽入口
@@ -74,16 +73,15 @@ wiki/
 | 編號 | 目錄 | 內容範圍 |
 | --- | --- | --- |
 | 00 | Rules and Decisions | 規範、角色、權限、文件生命週期、ADR 與衝突優先順序 |
-| 01 | Architecture | 共用系統架構、邊界、關鍵流程與整合關係 |
+| 01 | Architecture and Development | 共用系統架構、邊界、關鍵流程、整合關係、編譯、測試、CI/CD、Coding Style 與開發方法 |
 | 02 | Projects | 實際交付專案、專案設定、建置、測試、法規對照與已知問題 |
 | 03 | Game Library | 可移植遊戲、遊戲規格、機率、素材、平台 Adapter 與發行 |
 | 04 | Modules | 可重用模組，例如 SAS、Backend、IGSLib、OTA、TPM、USB 更新 |
 | 05 | Compliance | 法規原文索引、專業分析、條款與產品對照 |
 | 06 | Markets | 市場、地區、客戶與平台差異；不重複存放共用內容 |
-| 07 | Software Development | 編譯、測試、CI/CD、Coding Style、工具流程與開發方法 |
 | 08 | Tools | 工具、評估方法、Golden Q&A、檢查腳本與知識品質工具 |
 | 09 | AI and Wiki Agents | LLM、Prompt、檢索、Wiki Agent 與知識評估 |
-| 10 | Deployment and Maintenance | 發布、監控、事件、回滾、維運與生命週期管理 |
+| 10 | Incident and Problem Records | 問題、事故、影響、原因、處置、修復與預防措施紀錄 |
 | 99 | Archive | 停用、過期與歷史內容，預設不納入 LLM 檢索 |
 
 ## 5. 分類與 YAML 欄位
@@ -119,7 +117,7 @@ Raw 必須使用與正式知識完全相同的外層分類，讓上傳者在來�
 ```text
 wiki/raw/
 ├── 00_Rules-and-Decisions/
-├── 01_Architecture/
+├── 01_Architecture-and-Development/
 ├── 02_Projects/
 ├── 03_Game-Library/
 ├── 04_Modules/
@@ -127,10 +125,9 @@ wiki/raw/
 │   └── Unity/
 ├── 05_Compliance/
 ├── 06_Markets/
-├── 07_Software-Development/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
-├── 10_Deployment-and-Maintenance/
+├── 10_Incident-and-Problem-Records/
 └── 99_Archive/
 ```
 

@@ -5,7 +5,7 @@
 ```text
 raw/
 ├── 00_Rules-and-Decisions/
-├── 01_Architecture/
+├── 01_Architecture-and-Development/
 ├── 02_Projects/
 ├── 03_Game-Library/
 ├── 04_Modules/
@@ -13,10 +13,9 @@ raw/
 │   └── Unity/
 ├── 05_Compliance/
 ├── 06_Markets/
-├── 07_Software-Development/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
-├── 10_Deployment-and-Maintenance/
+├── 10_Incident-and-Problem-Records/
 └── 99_Archive/
 ```
 
@@ -39,4 +38,4 @@ status: "raw"
 
 欄位的詳細定義與正式 Wiki 的 YAML 範例，請看根目錄 `WIKI-SPEC.md` 的「Raw YAML 欄位定義」與「正式頁面 YAML 欄位定義」。
 
-Raw 保留原始脈絡，不把推測改寫成結論；Wiki Agent 會將整理結果直接寫入對應的 00–10 正式知識域，不建立 Curated 平行目錄。
+Raw 保留原始脈絡，不把推測改寫成結論；Wiki Agent 會將整理結果直接寫入對應的正式知識域，不建立 Curated 平行目錄。

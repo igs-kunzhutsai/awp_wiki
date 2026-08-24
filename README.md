@@ -1,6 +1,6 @@
 # AWP Backend Wiki
 
-AWP 團隊知識庫，目標是讓知識找得到、信得過、可追溯，並與 LLM Wiki Blueprint 採用相同的目錄架構。
+AWP 團隊知識庫，目標是讓知識找得到、信得過、可追溯；目錄以 LLM Wiki Blueprint 為基礎，並依 AWP 需求合併架構與開發分類。
 
 ## 現行入口
 
@@ -14,7 +14,7 @@ AWP 團隊知識庫，目標是讓知識找得到、信得過、可追溯，並�
 ```text
 wiki/
 ├── 00_Rules-and-Decisions/
-├── 01_Architecture/
+├── 01_Architecture-and-Development/
 ├── 02_Projects/
 ├── 03_Game-Library/
 ├── 04_Modules/
@@ -22,14 +22,13 @@ wiki/
 │   └── Unity/
 ├── 05_Compliance/
 ├── 06_Markets/
-├── 07_Software-Development/
 ├── 08_Tools/
 ├── 09_AI-and-Wiki-Agents/
-├── 10_Deployment-and-Maintenance/
+├── 10_Incident-and-Problem-Records/
 └── 99_Archive/
 ```
 
-另有 `wiki/raw/` 作為團隊原始資料入口，並完整鏡像 `00–10` 與 `99_Archive` 分類；Raw 不直接進正式導覽。
+另有 `wiki/raw/` 作為團隊原始資料入口，並鏡像所有正式知識分類與 `99_Archive`；Raw 不直接進正式導覽。
 
 ## 知識管線
 

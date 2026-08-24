@@ -21,3 +21,13 @@
 ## 2026-08-24（目錄命名清晰化）
 
 - 將正式 Wiki 與 Raw 的目錄名稱改為更直白的英文：`00_Rules-and-Decisions`、`07_Software-Development`、`09_AI-and-Wiki-Agents`、`10_Deployment-and-Maintenance`。
+
+## 2026-08-24（架構與開發合併）
+
+- 合併 `01_Architecture` 與 `07_Software-Development` 為 `01_Architecture-and-Development`。
+- 正式 Wiki 與 Raw 使用相同的新目錄；系統架構、開發流程、測試與 CI/CD 集中管理。
+
+## 2026-08-24（問題事件分類）
+
+- 將 `10_Deployment-and-Maintenance` 改為 `10_Incident-and-Problem-Records`。
+- 第 10 類專注記錄問題、事故、影響、原因、處置、修復與預防措施。
