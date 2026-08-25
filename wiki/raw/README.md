@@ -20,6 +20,18 @@ raw/
 
 路徑格式：`raw/<same-domain>/<team-or-project>/YYYY/MM/<raw-file>.md`
 
+圖片與附件放在同一層的 `assets/` 目錄，例如：
+
+```text
+raw/01_Architecture-and-Development/M02/2026/08/
+├── m02-packaging-process-outline.md
+└── assets/
+    ├── 01-resource-output-folder.png
+    └── 02-package-source-folder.png
+```
+
+圖片不可只貼外部網址；匯入時要保存到 Repo，並在 Markdown 使用相對路徑引用。若圖片含有密鑰、個資或客戶機密，先遮蔽後再上傳。
+
 每份 Raw 必須遵守根目錄 `WIKI-SPEC.md` 的 YAML 標頭規範。若無法判斷分類，先放 `00_Rules-and-Decisions/` 的待分類資料夾並標記 `⚠️ 待確認`，不要自行建立新分類。
 
 最小可用範例：
