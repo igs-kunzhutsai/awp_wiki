@@ -35,7 +35,9 @@ Wiki Agent 會在 `ingest` 新增或修改正式頁面時更新這份索引。�
 
 | 頁面 | 類型 | 知識域 | 狀態 | 更新日期 | 摘要 |
 | --- | --- | --- | --- | --- | --- |
-| （由 Wiki Agent 持續補充） | — | — | — | — | — |
+| [M02 打包與產品板更新流程](01_Architecture-and-Development/m02-packaging-and-board-update-guide.md) | `guide` | `01_Architecture-and-Development` | `draft` | `2026-08-25` | M02 平台的共用打包、燒錄與 FOTA 更新流程 |
+
+Wiki link：[[01_Architecture-and-Development/m02-packaging-and-board-update-guide]]
 
 ### 快速入口
 

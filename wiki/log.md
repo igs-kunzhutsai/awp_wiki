@@ -57,3 +57,17 @@
 ## 2026-08-25（健檢頻率）
 
 - Wiki Agent 與正式知識健檢由每週至少一次改為每天至少一次。
+
+## [2026-08-25] ingest | M02 打包與產品板更新流程
+
+- 操作：ingest
+- 輸入：`wiki/raw/02_Projects/PR-M02-Microchip-n-a/2026/08/m02-packaging-process-outline.md`
+- 更新頁面：`wiki/02_Projects/PR-M02-Microchip-n-a/build-and-update-guide.md`
+- 參考頁面：[Outline M02 打包流程說明](https://outline01.igsgame.com/doc/m02-ltq34UZl8Y)
+- 待確認：資源產出連結、開發板燒錄連結、機種名稱範例與 Git 更新目標。
+
+## [2026-08-25] reclassify | M02 打包與產品板更新流程
+
+- 原分類：`02_Projects`
+- 新分類：`01_Architecture-and-Development`
+- 原因：M02 是板台／平台，不是獨立專案；此頁是可供多個專案共用的打包、燒錄與 FOTA 流程。
