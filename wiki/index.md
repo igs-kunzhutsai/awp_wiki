@@ -29,10 +29,25 @@ owner: "AWP Wiki"
 - [Glossary](glossary.md)：共用術語（`[[glossary]]`）
 - [Wiki Log](log.md)：規則、分類與知識管線的 append-only 變更紀錄（`[[log]]`）
 
+## 頁面索引
+
+Wiki Agent 會在 `ingest` 新增或修改正式頁面時更新這份索引。索引內容包含頁面類型、知識域、狀態、更新日期與一句話摘要。
+
+| 頁面 | 類型 | 知識域 | 狀態 | 更新日期 | 摘要 |
+| --- | --- | --- | --- | --- | --- |
+| （由 Wiki Agent 持續補充） | — | — | — | — | — |
+
+### 快速入口
+
+- 最近更新：由 Wiki Agent 依 `updated` 維護
+- 待確認內容：搜尋 `⚠️ 待確認`
+- 重要決策：搜尋 `type: decision`
+- 問題事件：前往 `10_Incident-and-Problem-Records/`
+
 ## 資料流
 
 ```text
-wiki/raw/ → Wiki Agent → 正式知識域 → Git PR → Outline
+wiki/raw/ → Wiki Agent → 正式知識域 → 人工審查 → Outline
 ```
 
 ## 分類提醒

@@ -36,9 +36,9 @@ wiki/
         ↓
 Wiki Agent 整理到對應正式目錄
         ↓
-Git PR 審查
+人工審查
         ↓
 同步到 Outline
 ```
 
-AI 整理後的正式知識由 Agent 與 PR 流程保護，不建立獨立的 `curated/` 或 `outline/` 平行目錄。
+AI 整理後的正式知識由 Agent 與人工審查流程保護。

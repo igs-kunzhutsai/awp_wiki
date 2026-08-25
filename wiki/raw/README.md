@@ -39,4 +39,4 @@ compliance: []
 
 欄位的詳細定義與 Raw、正式 Wiki 共用的 YAML 範例，請看根目錄 `WIKI-SPEC.md` 的「共用 YAML 欄位定義」。
 
-Raw 保留原始脈絡，不把推測改寫成結論；Wiki Agent 會將整理結果直接寫入對應的正式知識域，不建立 Curated 平行目錄。
+Raw 保留原始脈絡，不把推測改寫成結論；Wiki Agent 會將整理結果直接寫入對應的正式知識域。

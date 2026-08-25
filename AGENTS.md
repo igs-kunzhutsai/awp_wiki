@@ -11,25 +11,15 @@
 
 不要全量載入 wiki，依任務讀取必要頁面。
 
-## Source code 基準
-
-需要核對 AWP 實作時，唯一基準是：
-
-```text
-../AWP_Backend/AWP_BACKEND_SYSTEM/
-```
-
-涉及 API、參數、enum、常數或實作行為，必須回到 source code 查證；Wiki 可能落後，不可單獨視為驗證結果。
-
 ## 知識管線
 
 ```text
-團隊成員 → wiki/raw/ → Wiki Agent → 對應正式知識域 → Git PR → Outline
+團隊成員 → wiki/raw/ → Wiki Agent → 對應正式知識域 → 人工審查 → Outline
 ```
 
 - 團隊成員可新增與修正 `wiki/raw/`。
 - AI 整理後直接寫入對應的正式知識域；問題與事件紀錄寫入 `10_Incident-and-Problem-Records`。
-- 不建立 `wiki/curated/` 或 `wiki/outline/` 平行層。
+- `ingest`、`query`、`lint` 必須依 `WIKI-SPEC.md` 第 10 節執行。
 - Module 依 Cocos／Unity 分流；Project 目錄與 YAML 欄位都必須標示引擎。
 
 ## 紅線
